@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using CalgaryHacks.CalgaryQuandrants;
 using CalgaryHacks.DatabaseModel;
 using CalgaryHacks.EventDtos.LocationDTOs;
+using CalgaryMapsApi.DTOs;
 
 namespace CalgaryHacks.Apis
 {
@@ -167,6 +168,37 @@ namespace CalgaryHacks.Apis
             return Task.FromResult(0);
         }
 
+        //For the Police Station Locations
+        public static Task UpdatePoliceLocations(List<PoliceServiceOfficesDTO> policeStations)
+        {
+            DataModel db = new DataModel();
+            List<PointsOfInterest> pointsOfInterests = db.PointsOfInterest.ToList();
 
+            foreach (var policeStation in policeStations)
+            {
+                PointsOfInterest existingPointsOfInterest =
+                    pointsOfInterests.FirstOrDefault(x => x.Name == policeStation.Name);
+
+                if (existingPointsOfInterest == null)
+                {
+                    PointsOfInterest pointsOfInterestModel = new PointsOfInterest();
+                    pointsOfInterestModel.Name = policeStation.Name;
+
+                    //Police Station api has longitude and latitude wrong so I had to switch them around
+                    pointsOfInterestModel.Latitude = policeStation.Longitude;
+                    pointsOfInterestModel.Longitude = policeStation.Latitude.ToString();
+                    pointsOfInterestModel.Type = "Police Station";
+
+                    var latLongLocation = new Loc(Convert.ToDouble(pointsOfInterestModel.Latitude), Convert.ToDouble(pointsOfInterestModel.Longitude));
+                    pointsOfInterestModel.Location = QuadrantIdentifier.getLocationInCalgary(latLongLocation);
+
+                    db.PointsOfInterest.Add(pointsOfInterestModel);
+
+                }
+
+            }
+            db.SaveChanges();
+            return Task.FromResult(0);
+        }
     }
 }

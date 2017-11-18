@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using CalgaryMapsApi.DTOs;
 
 namespace CalgaryHacks.Apis
 {
@@ -229,6 +230,29 @@ namespace CalgaryHacks.Apis
             var playgroundEquipmentDto = PlaygroundEquipmentDTO.FromJson(playgroundEquipmentDtoString);
 
             return playgroundEquipmentDto;
+
+        }
+
+        public static List<PoliceServiceOfficesDTO> GetPoliceStations()
+        {
+            HttpClient client = GetNewClient();
+
+            string url = "https://data.calgary.ca/resource/my86-b8vn.json";
+
+            client.BaseAddress = new Uri(url);
+
+            //Configuring Data.Calgary
+            ServicePointManager.SecurityProtocol = ServicePointManager.SecurityProtocol | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
+
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            HttpResponseMessage response = client.GetAsync("").Result;
+
+            var policeStationDtoString = response.Content.ReadAsStringAsync().Result;
+
+            var policeStationDto = PoliceServiceOfficesDTO.FromJson(policeStationDtoString);
+
+            return policeStationDto;
 
         }
 
