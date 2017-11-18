@@ -89,9 +89,14 @@ namespace CalgaryHacks.Controllers
             if (ModelState.IsValid)
             {
                 User user = db.Users.FirstOrDefault(a => a.Email == login.Email && a.Password == login.Password);
+
                 if (user != null)
                 {
                     HttpContext.Session["user"] = user;
+                    if (user.Events.Count != 0)
+                    {
+                        return RedirectToAction("ChooseChat", "Home");
+                    }
                     return RedirectToAction("Index", "Home");
                 }
                 ViewBag.Message = "Incorrect Email/Password";
@@ -99,13 +104,8 @@ namespace CalgaryHacks.Controllers
             return View();
         }
 
-        public ActionResult Chat(string roomId)
+        public ActionResult Chat(int roomId)
         {
-            int roomIdint;
-            if (!Int32.TryParse(roomId, out roomIdint))
-            {
-                RedirectToAction("Index", "Home");
-            }
 
             User user = (User)HttpContext.Session["user"];
             if (user == null)
@@ -113,7 +113,7 @@ namespace CalgaryHacks.Controllers
                 return RedirectToAction("Login", "Home");
             }
             ViewBag.roomId = roomId;
-            ViewBag.roomName = EventCache.GetEventBag().FirstOrDefault(x => x.Id == roomIdint)?.Name;
+            ViewBag.roomName = EventCache.GetEventBag().FirstOrDefault(x => x.Id == roomId)?.Name;
             return View(user);
         }
 
