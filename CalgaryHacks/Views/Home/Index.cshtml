@@ -1,0 +1,273 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+@model CalgaryHacks.Models.ViewModels.EventViewModel
+
+<style>
+    .popin {
+        background: #fff;
+        padding: 15px;
+        box-shadow: 0 0 20px #999;
+        border-radius: 2px;
+    }
+
+    @@media only screen and (max-width:700px) {
+        .container {
+            padding-top: 20px;
+            width: fit-content;
+        }
+    }
+</style>
+
+
+
+<div class="container-fluid bg-grey " style="padding-top: 5em;">
+    <div class="row">
+        <!--Here is the map -->
+        <!--Column 1-->
+        <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 popin" id="map"></div>
+
+        <!--Column 2-->
+        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 container fadein" style="display: none;">
+
+            <div class="panel panel-primary text-center">
+                <div class="panel-heading">
+                    <h3 class="event"></h3>
+                </div>
+                <div class="panel-body">
+                    <p class="fadein">Temperature:<strong id="temperature"></strong></p>
+                    <p class="address">Address:</p>
+                    <p class="eventDate">Date:</p>
+                    <p class="description">Description:</p>
+                </div>
+
+                <div class="panel-footer">
+                    <p class="url">More Information:</p>
+                    <h4>Join us!</h4>
+                    @using (Html.BeginForm("ChooseChat", "Home", FormMethod.Post))
+                    {
+                        <input type="hidden" id="roomId" name="roomId" />
+                            <button type="submit" class="btn">Chat Now! </button>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!--Here we begin using the code for the events based on today-->
+@{
+    DateTime todaysDate = DateTime.Now;
+    DateTime tomorrowsDate = DateTime.Now.AddDays(1);
+    DateTime endOfTomorrowsDate = DateTime.Now.AddDays(2);
+
+    var todaysEvents = Model.Events.Where(x => x.EventDate >= todaysDate && x.EventDate <= tomorrowsDate).ToList();
+    var tomorrowsEvents = Model.Events.Where(x => x.EventDate >= tomorrowsDate && x.EventDate <= endOfTomorrowsDate).ToList();
+}
+
+<!--Today's Events -->
+<div class="col-sm-12 col-md-12 col-lg-12">
+    <h3><small>EVENTS HAPPENING TODAY <span class="badge">@todaysEvents.Count()</span></small></h3>
+    <hr>
+    @foreach (var eventModel in todaysEvents)
+    {
+        var eventDescription = eventModel.Description ?? "No Description Available";
+
+        <h3>@eventModel.Name</h3>
+        <h5><span class="glyphicon glyphicon-time"></span>@String.Format("{0:f}", eventModel.EventDate) , @eventModel.Address</h5>
+            <h5><span class="label label-danger">Sporting</span> <span class="label label-primary">Entertainment</span></h5>
+            <br>
+            <p> Description:@Html.Raw(eventDescription)</p>
+            <p>More Information: <a href="@eventModel.URL"> Buy tickets Now!</a></p>
+
+        Html.BeginForm("ChooseChat", "Home", FormMethod.Post);
+        {
+            <input type="hidden" name="roomId" value="@eventModel.Id" />
+            <button type="submit" class="btn">Chat Now</button>
+        }
+        <br>
+        <br>
+
+
+    }
+</div>
+<!--End of Todays Events-->
+<!--Tomorrow's Events-->
+<div class="col-sm-12 col-md-12 col-lg-12">
+    <h3 class="displayEvents" style="cursor:pointer"><small>EVENTS HAPPENING TOMMOROW <span class="badge">@tomorrowsEvents.Count()</span></small></h3>
+    <div class="eventsToggle" style="display: none">
+        <hr>
+        @foreach (var eventModel in tomorrowsEvents)
+            {
+                var eventDescription = eventModel.Description ?? "No Description Available";
+
+            <h3>@eventModel.Name</h3>
+            <h5><span class="glyphicon glyphicon-time"></span>@String.Format("{0:f}", eventModel.EventDate) , @eventModel.Address</h5>
+                <h5><span class="label label-danger">Sporting</span> <span class="label label-primary">Entertainment</span></h5>
+                <br>
+                <p> Description:@Html.Raw(eventDescription)</p>
+                <p>More Information: <a href="@eventModel.URL"> Buy tickets Now!</a></p>
+
+            Html.BeginForm("ChooseChat", "Home", FormMethod.Post);
+            {
+                <input type="hidden" name="roomId" value="@eventModel.Id" />
+                <button type="submit" class="btn">Chat Now</button>
+            }
+            <br>
+            <br>
+
+
+        }
+    </div>
+</div>
+<!--End of Tomorrow's Events-->
+@*Google API key: AIzaSyCi84qEblX_oHY4fLUW8pjliIsrXZJs3eI *@
+
+@*<script type="text/javascript" src="//maps.google.com/maps/api/js?v=3sensor=true&amp;key=AIzaSyCi84qEblX_oHY4fLUW8pjliIsrXZJs3eI"></script>*@
+@*<script src="//maps.google.com/maps/api/js?v=3.13&amp;sensor=false&amp;libraries=geometry" type="text/javascript"></script>*@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<script src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyCi84qEblX_oHY4fLUW8pjliIsrXZJs3eI&sensor=false"></script>
+
+
+<script>
+
+    var map;
+    $(document).ready(function () {
+        map = new GMaps({
+            div: '#map',
+            lat: 51.044270,
+            lng: -114.062019,
+            width: '38.5em',
+            height: '500px'
+        });
+        //width 650px height 500px
+        //Variables for longitude and latitude to grab the WEATHER
+        var geoLatitude;
+        var geoLongitude;
+
+        GMaps.geolocate({
+            success: function (position) {
+                map.setCenter(position.coords.latitude, position.coords.longitude);
+                geoLatitude = position.coords.latitude;
+                geoLongitude = position.coords.longitude;
+
+
+
+                //OPEN WEATHER APP
+                $(function () {
+                    //put in ?jsoncallback and see if this works
+                    var openWeatherAPI =
+                        "https://api.openweathermap.org/data/2.5/weather?units=metric";
+                    $.getJSON(openWeatherAPI,
+                        {
+                            //parameters here
+                            //I will just use calgarys default temp here
+                            APPID: "3ad26194e7f13a5c7c15e701b59e8f3e",
+                            //                            lat: String(geoLatitude),
+                            //                            lon: String(geoLongitude),
+                            lat: String(51.044270),
+                            lon: String(-114.062019),
+
+                            format: "json"
+
+                        }).done(function (data) {
+                            //success
+                            //                        console.log(data.name);
+                            //                        console.log(data.main.temp);
+
+                            var name = data.name;
+                            var temperature = data.main.temp;
+                            console.log(temperature);
+
+                            var celsius = $("<b>").html(temperature + " C");
+                            celsius.appendTo("#temperature");
+
+                            //console.log(data);
+                        }).fail(function () {
+                            //failure
+                            alert("AJAX CALL FAILED");
+                        });
+                });
+                // End of WEATHER APP
+            },
+            error: function (error) {
+                alert('Geolocation failed: ' + error.message);
+            },
+            not_supported: function () {
+                alert("Your browser does not support geolocation");
+            },
+            always: function () {
+
+            }
+        }); //end of geolocate
+
+        $("#eventMarker").hide();
+
+        $(".displayEvents").click(function () {
+            $(".eventsToggle").toggle(2000);
+        });
+
+
+    });//end of document ready
+
+
+
+</script>
+
+@foreach (var eventModel in Model.Events)
+{
+    <text>
+        <script>
+            $(document).ready(function() {
+                map.addMarker({
+                    lat: @eventModel.Latitude,
+                    lng: @eventModel.Longitude,
+                    title: '@eventModel.Name',
+                    infoWindow: {content: '<b>@eventModel.Name</b> <p>@eventModel.Address</p>'},
+                    click: function (e) {
+
+                        $(".fadein").fadeIn(2000);
+
+                        $(".event").empty();
+
+                        var event = $("<p>").html("@eventModel.Name");
+                        event.appendTo(".event");
+                        $('#roomId').val("@eventModel.Id");
+
+                        @{ var eventDescription = eventModel.Description ?? "no description available for this event!";}
+
+                        $(".description").empty();
+                        var description = $("<p>").html("Description: @eventDescription");
+                        description.appendTo(".description");
+
+                        $(".address").empty();
+                        var address = $("<p>").html("Address: @eventModel.Address");
+                        address.appendTo(".address");
+
+                        $(".url").empty();
+                        var url = $("<p>").html("URL:<a href='@eventModel.URL'>Click here for more Information!");
+                        url.appendTo(".url");
+
+                        $(".eventDate").empty();
+                        var url = $("<p>").html("Date:@eventModel.EventDate");
+                        url.appendTo(".eventDate");
+
+                    }
+                });
+            });
+        </script>
+    </text>
+    }
+
+
+
+
+
+
+
+
+

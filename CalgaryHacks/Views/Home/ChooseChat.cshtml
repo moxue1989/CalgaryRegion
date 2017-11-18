@@ -1,0 +1,26 @@
+﻿@model CalgaryHacks.Models.ViewModels.ChooseChatModel
+
+@{
+    ViewBag.Title = "ChooseChat";
+}
+
+<h2>ChooseChat</h2>
+
+<table class="table">
+    <tr>
+        <th>Choose a room to join:</th>
+    </tr>
+
+    @foreach (var eventChat in Model.EventChats) {
+        <tr>
+            <td>
+                @using (Html.BeginForm("ChooseChat", "Home", FormMethod.Post))
+                {
+                    <input type="hidden" name="roomId" value="@eventChat.Id"/>
+                    <input type="submit" value="Join @eventChat.Name"/>
+                }
+            </td>
+        </tr>
+    }
+
+</table>
