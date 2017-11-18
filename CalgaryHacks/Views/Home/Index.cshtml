@@ -136,7 +136,33 @@
 <script>
 
     var map;
+    var iconDim = 25;
+    var iconSize;
+    var icons;
     $(document).ready(function () {
+        iconSize = new google.maps.Size(iconDim,iconDim);
+        icons = {
+            LRTStation:{
+                url: '~/images/LRTStation.png',
+                scaledSize: iconSize
+            },
+            PublicLibrary:{
+                url: '~/images/PublicLibrary.png',
+                scaledSize: iconSize
+            },
+            CommunityCentre:{
+                url: '~/images/CommunityCentre.png',
+                scaledSize: iconSize
+            },
+            PoliceStation:{
+                url: '~/images/PoliceStation.png',
+                scaledSize: iconSize
+            },
+            FireStation:{
+                url: '~/images/FireStation.png',
+                scaledSize: iconSize
+            }
+        };
         map = new GMaps({
             div: '#map',
             lat: 51.044270,
@@ -175,22 +201,22 @@
                             format: "json"
 
                         }).done(function (data) {
-                            //success
-                            //                        console.log(data.name);
-                            //                        console.log(data.main.temp);
+                        //success
+                        //                        console.log(data.name);
+                        //                        console.log(data.main.temp);
 
-                            var name = data.name;
-                            var temperature = data.main.temp;
-                            console.log(temperature);
+                        var name = data.name;
+                        var temperature = data.main.temp;
+                        console.log(temperature);
 
-                            var celsius = $("<b>").html(temperature + " C");
-                            celsius.appendTo("#temperature");
+                        var celsius = $("<b>").html(temperature + " C");
+                        celsius.appendTo("#temperature");
 
-                            //console.log(data);
-                        }).fail(function () {
-                            //failure
-                            alert("AJAX CALL FAILED");
-                        });
+                        //console.log(data);
+                    }).fail(function () {
+                        //failure
+                        alert("AJAX CALL FAILED");
+                    });
                 });
                 // End of WEATHER APP
             },
@@ -213,9 +239,6 @@
 
 
     });//end of document ready
-
-
-
 </script>
 
 @foreach (var eventModel in Model.Events)
@@ -226,6 +249,7 @@
                 map.addMarker({
                     lat: @eventModel.Latitude,
                     lng: @eventModel.Longitude,
+                    icon: icons.@eventModel.Type.Replace(" ",""),
                     title: '@eventModel.Name',
                     infoWindow: {content: '<b>@eventModel.Name</b> <p>@eventModel.Address</p>'},
                     click: function (e) {
@@ -260,12 +284,3 @@
         </script>
     </text>
 }
-
-
-
-
-
-
-
-
-
