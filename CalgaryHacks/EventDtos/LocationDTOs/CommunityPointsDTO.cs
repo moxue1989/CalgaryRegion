@@ -11,8 +11,7 @@ namespace CalgaryHacks.EventDtos.LocationDTOs
         [JsonProperty("class_code")]
         public string ClassCode { get; set; }
 
-        [JsonProperty("comm_code")]
-        public string CommCode { get; set; }
+  
 
         [JsonProperty("comm_structure")]
         public string CommStructure { get; set; }
@@ -20,14 +19,6 @@ namespace CalgaryHacks.EventDtos.LocationDTOs
         [JsonProperty("community_code")]
         public string CommunityCode { get; set; }
 
-        [JsonProperty(":@computed_region_4b54_tmc4")]
-        public string ComputedRegion4b54Tmc4 { get; set; }
-
-        [JsonProperty(":@computed_region_dyj4_ed5g")]
-        public string ComputedRegionDyj4Ed5g { get; set; }
-
-        [JsonProperty(":@computed_region_kxmf_bzkv")]
-        public string ComputedRegionKxmfBzkv { get; set; }
 
         [JsonProperty("location")]
         public CommunityPointsDTOLocation Location { get; set; }
