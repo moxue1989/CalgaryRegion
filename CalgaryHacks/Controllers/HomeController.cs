@@ -152,5 +152,10 @@ namespace CalgaryHacks.Controllers
 
             return RedirectToAction("Chat", "Home");
         }
+
+        public ActionResult Analytics()
+        {
+            return View();
+        }
     }
 }
