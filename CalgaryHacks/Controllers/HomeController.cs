@@ -155,6 +155,11 @@ namespace CalgaryHacks.Controllers
 
         public ActionResult Analytics()
         {
+           // PointsOfInterestsMapper.UpdateCommunityCenterLocations(PointsOfInterestsApi.GetCommunities());
+            //PointsOfInterestsMapper.UpdateFireStationLocations(PointsOfInterestsApi.GetFireStationLocations());
+           // PointsOfInterestsMapper.UpdatePublicLibraryLocations(PointsOfInterestsApi.GetPublicLibraryLocations());
+            PointsOfInterestsMapper.UpdateRecreationalLocations(PointsOfInterestsApi.GetRecreationalFacilities());
+
             return View();
         }
     }
