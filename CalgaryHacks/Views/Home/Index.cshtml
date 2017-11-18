@@ -22,6 +22,7 @@
 
 
 
+
 <div class="container-fluid bg-grey " style="padding-top: 5em;">
     <div class="row">
         <!--Here is the map -->
@@ -36,7 +37,7 @@
                     <h3 class="event"></h3>
                 </div>
                 <div class="panel-body">
-                    <p class="fadein">Temperature:<strong id="temperature"></strong></p>
+                    <p class="fadein">Temperature: <strong id="temperature"></strong></p>
                     <p class="address">Address:</p>
                     <p class="eventDate">Date:</p>
                     <p class="description">Description:</p>
@@ -77,11 +78,10 @@
         var eventDescription = eventModel.Description ?? "No Description Available";
 
         <h3>@eventModel.Name</h3>
-        <h5><span class="glyphicon glyphicon-time"></span>@String.Format("{0:f}", eventModel.EventDate) , @eventModel.Address</h5>
+        <h5><span class="glyphicon glyphicon-time"></span> @String.Format("{0:f}", eventModel.EventDate) , @eventModel.Address</h5>
         <h5><span class="label label-danger">Sporting</span> <span class="label label-primary">Entertainment</span></h5>
-            <br>
-            <p> Description:@Html.Raw(eventDescription)</p>
-            <p>More Information: <a href="@eventModel.URL"> Buy tickets Now!</a></p>
+            <p> Description: @Html.Raw(eventDescription)</p>
+            <p><a href="@eventModel.URL">Click here for more information</a></p>
 
         Html.BeginForm("ChooseChat", "Home", FormMethod.Post);
         {
@@ -213,6 +213,8 @@
         });
 
 
+
+
     });//end of document ready
 
 
@@ -248,11 +250,11 @@
                         address.appendTo(".address");
 
                         $(".url").empty();
-                        var url = $("<p>").html("URL:<a href='@eventModel.URL'>Click here for more Information!");
+                        var url = $("<p>").html("<a href='@eventModel.URL'>Click here for more Information");
                         url.appendTo(".url");
 
                         $(".eventDate").empty();
-                        var url = $("<p>").html("Date:@eventModel.EventDate");
+                        var url = $("<p>").html("Date: @eventModel.EventDate");
                         url.appendTo(".eventDate");
 
                     }
