@@ -39,7 +39,7 @@ namespace CalgaryHacks.Apis
                 string result = response.Content.ReadAsStringAsync().Result;
                 MeetupEventsDTO meetupEventsDto = MeetupEventsDTO.FromJson(result);
                 await EventMapper.UpdateEventsFromMeetup(meetupEventsDto.Results);
-                Thread.Sleep(1000);
+                Thread.Sleep(500);
             }
         }
 

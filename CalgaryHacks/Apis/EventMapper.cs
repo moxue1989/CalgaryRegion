@@ -12,6 +12,8 @@ namespace CalgaryHacks.Apis
 {
     public class EventMapper
     {
+        private const string NoDescriptionAvailiable = "No description availiable.";
+
         public static Task UpdateEventsFromTicketMaster(TicketMasterDto ticketMasterEvents)
         {
             DataModel db = new DataModel();
@@ -28,6 +30,10 @@ namespace CalgaryHacks.Apis
                     if (promoter != null)
                     {
                         eventModel.Description = promoter.Description;
+                    }
+                    else
+                    {
+                        eventModel.Description = NoDescriptionAvailiable;
                     }
                     eventModel.Latitude = ticketMasterDtoVenue.Location.Latitude;
                     eventModel.Longitude = ticketMasterDtoVenue.Location.Longitude;
@@ -72,7 +78,9 @@ namespace CalgaryHacks.Apis
                     eventModel.EventfulUniqueId = eventfulEventEvent.Id;
                     eventModel.Name = eventfulEventEvent.Title;
                     eventModel.EventDate = DateTime.ParseExact(eventfulEventEvent.StartTime, "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture);
-                    eventModel.Description = eventfulEventEvent.Description;
+                    eventModel.Description = String.IsNullOrEmpty(eventfulEventEvent.Description)
+                        ? NoDescriptionAvailiable
+                        : eventfulEventEvent.Description;
                     addQuadrantToEvent(eventModel);
                     db.Events.Add(eventModel);
                 }
@@ -112,7 +120,9 @@ namespace CalgaryHacks.Apis
                     eventModel.TrumbaUniqueId = trumbaId;
                     eventModel.Name = attributes.Title;
                     eventModel.EventDate = DateTime.ParseExact(attributes.NextDateDtfmt, "yyyy-MM-dd", CultureInfo.InvariantCulture);
-                    eventModel.Description = attributes.Notes;
+                    eventModel.Description = String.IsNullOrEmpty(attributes.Notes)
+                        ? NoDescriptionAvailiable
+                        : attributes.Notes;
                     addQuadrantToEvent(eventModel);
                     db.Events.Add(eventModel);
                 }
@@ -145,7 +155,9 @@ namespace CalgaryHacks.Apis
                     eventModel.MeetupUniqueId = meetupEvent.Id;
                     eventModel.Name = meetupEvent.Name;
                     eventModel.EventDate = GetDateTimeFromEpoch(meetupEvent.Time);
-                    eventModel.Description = meetupEvent.Description;
+                    eventModel.Description = String.IsNullOrEmpty(meetupEvent.Description)
+                        ? NoDescriptionAvailiable
+                        : meetupEvent.Description;
                     addQuadrantToEvent(eventModel);
                     db.Events.Add(eventModel);
                 }
