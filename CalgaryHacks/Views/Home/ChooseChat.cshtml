@@ -3,24 +3,26 @@
 @{
     ViewBag.Title = "ChooseChat";
 }
+<h2>
+    <th>Your Current Events:</th>
+</h2>
 
-<h2>ChooseChat</h2>
+@foreach (var eventChat in Model.EventChats)
+{
+    var eventDescription = eventChat.Description ?? "No Description Available";
 
-<table class="table">
-    <tr>
-        <th>Choose a room to join:</th>
-    </tr>
+    <h3>@eventChat.Name</h3>
+        <h5><span class="glyphicon glyphicon-time"></span>@String.Format("{0:f}", eventChat.EventDate) , @eventChat.Address</h5>
+        <h5><span class="label label-danger">Sporting</span> <span class="label label-primary">Entertainment</span></h5>
+        <br>
+        <p> Description:@Html.Raw(eventDescription)</p>
+        <p>More Information: <a href="@eventChat.URL"> Buy tickets Now!</a></p>
 
-    @foreach (var eventChat in Model.EventChats) {
-        <tr>
-            <td>
-                @using (Html.BeginForm("ChooseChat", "Home", FormMethod.Post))
-                {
-                    <input type="hidden" name="roomId" value="@eventChat.Id"/>
-                    <input type="submit" value="Join @eventChat.Name"/>
-                }
-            </td>
-        </tr>
-    }
+        <form action="/Home/ChooseChat" method="post">
+            <input type="hidden" name="roomId" value="@eventChat.Id" />
+            <button type="submit" class="btn">Chat Now</button>
+        </form>
+    <br>
+    <br>
+}
 
-</table>

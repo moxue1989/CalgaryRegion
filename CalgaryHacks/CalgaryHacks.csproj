@@ -201,6 +201,7 @@
     <Compile Include="DatabaseModel\User.cs" />
     <Compile Include="EventDtos\EventfulDTO.cs" />
     <Compile Include="EventDtos\GoogleLocations.cs" />
+    <Compile Include="EventDtos\LocationDTOs\PoliceServiceOfficesDTO.cs" />
     <Compile Include="EventDtos\MeetupEventsDTO.cs" />
     <Compile Include="EventDtos\Serialize.cs" />
     <Compile Include="EventDtos\TicketMasterDTO.cs" />
@@ -238,6 +239,11 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="images\CommunityCentre.png" />
+    <Content Include="images\FireStation.png" />
+    <Content Include="images\LRTStation.png" />
+    <Content Include="images\PoliceStation.png" />
+    <Content Include="images\PublicLibrary.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">

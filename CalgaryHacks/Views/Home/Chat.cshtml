@@ -5,8 +5,8 @@
 }
 <input type="hidden" id="displayname" value="@Model.Name" />
 <input type="hidden" id="userid" value="@Model.Id" />
-<input type="hidden" id="currentRoom" value="@Model.CurrentRoomId" />
-<h4 id="chatRoomName">Chat</h4>
+<input type="hidden" id="currentRoom" value="@ViewBag.roomId" />
+<h4 id="chatRoomName">@ViewBag.roomName</h4>
 
 <div class="container-fluid">
     <div class="row">
@@ -99,17 +99,5 @@
             var encodedValue = $('<div />').text(value).html();
             return encodedValue;
         }
-    </script>
-    <script>
-        $.ajax({
-            url: '/api/Event/' + $('#currentRoom').val(),
-            type: 'GET',
-            success: function (data) {
-                if (data) {
-                    console.log(data);
-                    $('#chatRoomName').text(data.Name);
-                }
-            }
-        });
     </script>
 }

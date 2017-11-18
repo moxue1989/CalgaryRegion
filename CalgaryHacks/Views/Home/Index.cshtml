@@ -80,14 +80,15 @@
         <h3>@eventModel.Name</h3>
         <h5><span class="glyphicon glyphicon-time"></span> @String.Format("{0:f}", eventModel.EventDate) , @eventModel.Address</h5>
         <h5><span class="label label-danger">Sporting</span> <span class="label label-primary">Entertainment</span></h5>
-            <p> Description: @Html.Raw(eventDescription)</p>
-            <p><a href="@eventModel.URL">Click here for more information</a></p>
+            <br>
+            <p> Description:@Html.Raw(eventDescription)</p>
+            <p>More Information: <a href="@eventModel.URL"> Buy tickets Now!</a></p>
+        
+        <form action="/Home/ChooseChat" method="post">
 
-        Html.BeginForm("ChooseChat", "Home", FormMethod.Post);
-        {
             <input type="hidden" name="roomId" value="@eventModel.Id" />
             <button type="submit" class="btn">Chat Now</button>
-        }
+        </form>
         <br>
         <br>
 
@@ -111,11 +112,10 @@
                 <p> Description:@Html.Raw(eventDescription)</p>
                 <p>More Information: <a href="@eventModel.URL"> Buy tickets Now!</a></p>
 
-            Html.BeginForm("ChooseChat", "Home", FormMethod.Post);
-            {
-                <input type="hidden" name="roomId" value="@eventModel.Id" />
-                <button type="submit" class="btn">Chat Now</button>
-            }
+                <form action="/Home/ChooseChat" method="post">
+                    <input type="hidden" name="roomId" value="@eventModel.Id" />
+                    <button type="submit" class="btn">Chat Now</button>
+                </form>
             <br>
             <br>
 
