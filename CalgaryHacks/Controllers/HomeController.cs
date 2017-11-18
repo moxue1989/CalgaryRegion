@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
@@ -103,17 +104,15 @@ namespace CalgaryHacks.Controllers
             return View();
         }
 
-        public ActionResult Chat()
+        public ActionResult Chat(int roomId)
         {
             User user = (User)HttpContext.Session["user"];
             if (user == null)
             {
                 return RedirectToAction("Login", "Home");
             }
-            if (user.CurrentRoomId == null)
-            {
-                return RedirectToAction("ChooseChat", "Home");
-            }
+            ViewBag.roomId = roomId;
+            ViewBag.roomName = EventCache.GetEventBag().FirstOrDefault(x => x.Id == roomId)?.Name;
             return View(user);
         }
 
@@ -125,24 +124,28 @@ namespace CalgaryHacks.Controllers
                 return RedirectToAction("Login", "Home");
             }
             ViewModels.ChooseChatModel chooseChatModel = new ViewModels.ChooseChatModel();
-            chooseChatModel.EventChats = EventCache.GetEventBag().ToList();
+            User userModel = db.Users.Find(user.Id);
 
+            if (userModel?.Events == null || userModel.Events.Count == 0)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            chooseChatModel.EventChats = userModel.Events;
             return View(chooseChatModel);
         }
 
         [HttpPost]
-        public ActionResult ChooseChat(String roomId)
+        public ActionResult ChooseChat(int roomId)
         {
             User user = (User)HttpContext.Session["user"];
             if (user == null)
             {
                 return RedirectToAction("Login", "Home");
             }
-            user.CurrentRoomId = roomId;
             HttpContext.Session["user"] = user;
 
             User dbUser = db.Users.Find(user.Id);
-            Event eventObject = db.Events.Find(Int32.Parse(roomId));
+            Event eventObject = db.Events.Find(roomId);
             if (dbUser != null && eventObject != null)
             {
                 dbUser.Events.Add(eventObject);
@@ -150,7 +153,7 @@ namespace CalgaryHacks.Controllers
                 db.SaveChanges();
             }
 
-            return RedirectToAction("Chat", "Home");
+            return RedirectToAction("Chat", "Home", new {roomId});
         }
 
         public ActionResult Analytics()

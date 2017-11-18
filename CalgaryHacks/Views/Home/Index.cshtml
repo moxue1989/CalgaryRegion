@@ -82,12 +82,11 @@
             <br>
             <p> Description:@Html.Raw(eventDescription)</p>
             <p>More Information: <a href="@eventModel.URL"> Buy tickets Now!</a></p>
-
-        Html.BeginForm("ChooseChat", "Home", FormMethod.Post);
-        {
+        
+        <form action="/Home/ChooseChat" method="post">
             <input type="hidden" name="roomId" value="@eventModel.Id" />
             <button type="submit" class="btn">Chat Now</button>
-        }
+        </form>
         <br>
         <br>
 
@@ -111,11 +110,10 @@
                 <p> Description:@Html.Raw(eventDescription)</p>
                 <p>More Information: <a href="@eventModel.URL"> Buy tickets Now!</a></p>
 
-            Html.BeginForm("ChooseChat", "Home", FormMethod.Post);
-            {
-                <input type="hidden" name="roomId" value="@eventModel.Id" />
-                <button type="submit" class="btn">Chat Now</button>
-            }
+                <form action="/Home/ChooseChat" method="post">
+                    <input type="hidden" name="roomId" value="@eventModel.Id" />
+                    <button type="submit" class="btn">Chat Now</button>
+                </form>
             <br>
             <br>
 
