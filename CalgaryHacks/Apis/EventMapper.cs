@@ -24,6 +24,11 @@ namespace CalgaryHacks.Apis
                 {
                     Event eventModel = new Event();
                     TicketMasterDtoVenue ticketMasterDtoVenue = ticketMasterEvent.Embedded.Venues[0];
+                    TicketMasterDtoPromoter promoter = ticketMasterEvent.Promoter;
+                    if (promoter != null)
+                    {
+                        eventModel.Description = promoter.Description;
+                    }
                     eventModel.Latitude = ticketMasterDtoVenue.Location.Latitude;
                     eventModel.Longitude = ticketMasterDtoVenue.Location.Longitude;
                     eventModel.Address = ticketMasterDtoVenue.Address.Line1;
@@ -117,31 +122,30 @@ namespace CalgaryHacks.Apis
             return Task.FromResult(0);
         }
 
-        public static Task UpdateEventsFromMeetup(List<MeetupEventDto> meetupEventDtos)
+        public static Task UpdateEventsFromMeetup(List<MeetupEventsDTOResult> meetupEventDtos)
         {
             DataModel db = new DataModel();
             List<Event> events = db.Events.ToList();
-            foreach (MeetupEventDto meetupEvent in meetupEventDtos)
+            foreach (MeetupEventsDTOResult meetupEvent in meetupEventDtos)
             {
-                Event existingEvent = events.FirstOrDefault(x => x.MeetupUniqueId == meetupEvent.id);
+                Event existingEvent = events.FirstOrDefault(x => x.MeetupUniqueId == meetupEvent.Id);
                 if (existingEvent == null)
                 {
-
                     var eventModel = new Event();
 
-                    MeetupEventDtoVenue eventVenue = meetupEvent.venue;
+                    MeetupEventsDTOVenue eventVenue = meetupEvent.Venue;
                     if (eventVenue == null)
                     {
                         continue;
                     }
-                    eventModel.Latitude = eventVenue.lat.ToString();
-                    eventModel.Longitude = eventVenue.lon.ToString();
-                    eventModel.Address = eventVenue.address_1;
-                    eventModel.URL = meetupEvent.link;
-                    eventModel.MeetupUniqueId = meetupEvent.id;
-                    eventModel.Name = meetupEvent.name;
-                    eventModel.EventDate = GetDateTimeFromEpoch(meetupEvent.time);
-                    eventModel.Description = meetupEvent.description;
+                    eventModel.Latitude = eventVenue.Lat.ToString();
+                    eventModel.Longitude = eventVenue.Lon.ToString();
+                    eventModel.Address = eventVenue.Address1;
+                    eventModel.URL = meetupEvent.EventUrl;
+                    eventModel.MeetupUniqueId = meetupEvent.Id;
+                    eventModel.Name = meetupEvent.Name;
+                    eventModel.EventDate = GetDateTimeFromEpoch(meetupEvent.Time);
+                    eventModel.Description = meetupEvent.Description;
                     addQuadrantToEvent(eventModel);
                     db.Events.Add(eventModel);
                 }

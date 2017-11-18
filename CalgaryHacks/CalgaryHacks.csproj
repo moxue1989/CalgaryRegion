@@ -178,6 +178,7 @@
     <Compile Include="Apis\EventsApi.cs" />
     <Compile Include="Apis\GoogleMaps.cs" />
     <Compile Include="Apis\IndicatorsOfLifeApi.cs" />
+    <Compile Include="Apis\MeetupGroupsToSig.cs" />
     <Compile Include="Apis\PointsOfInterestsApi.cs" />
     <Compile Include="Apis\PointsOfInterestsMapper.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -199,7 +200,7 @@
     <Compile Include="DatabaseModel\User.cs" />
     <Compile Include="EventDtos\EventfulDTO.cs" />
     <Compile Include="EventDtos\GoogleLocations.cs" />
-    <Compile Include="EventDtos\MeetupEventDTO.cs" />
+    <Compile Include="EventDtos\MeetupEventsDTO.cs" />
     <Compile Include="EventDtos\Serialize.cs" />
     <Compile Include="EventDtos\TicketMasterDTO.cs" />
     <Compile Include="EventDtos\TrumbaDTO.cs" />

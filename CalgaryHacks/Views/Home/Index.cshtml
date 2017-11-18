@@ -48,7 +48,7 @@
                     @using (Html.BeginForm("ChooseChat", "Home", FormMethod.Post))
                     {
                         <input type="hidden" id="roomId" name="roomId" />
-                            <button type="submit" class="btn">Chat Now! </button>
+                        <button type="submit" class="btn">Chat Now! </button>
                     }
                 </div>
             </div>
@@ -78,7 +78,7 @@
 
         <h3>@eventModel.Name</h3>
         <h5><span class="glyphicon glyphicon-time"></span>@String.Format("{0:f}", eventModel.EventDate) , @eventModel.Address</h5>
-            <h5><span class="label label-danger">Sporting</span> <span class="label label-primary">Entertainment</span></h5>
+        <h5><span class="label label-danger">Sporting</span> <span class="label label-primary">Entertainment</span></h5>
             <br>
             <p> Description:@Html.Raw(eventDescription)</p>
             <p>More Information: <a href="@eventModel.URL"> Buy tickets Now!</a></p>
@@ -106,7 +106,7 @@
 
             <h3>@eventModel.Name</h3>
             <h5><span class="glyphicon glyphicon-time"></span>@String.Format("{0:f}", eventModel.EventDate) , @eventModel.Address</h5>
-                <h5><span class="label label-danger">Sporting</span> <span class="label label-primary">Entertainment</span></h5>
+            <h5><span class="label label-danger">Sporting</span> <span class="label label-primary">Entertainment</span></h5>
                 <br>
                 <p> Description:@Html.Raw(eventDescription)</p>
                 <p>More Information: <a href="@eventModel.URL"> Buy tickets Now!</a></p>
@@ -238,10 +238,8 @@
                         event.appendTo(".event");
                         $('#roomId').val("@eventModel.Id");
 
-                        @{ var eventDescription = eventModel.Description ?? "no description available for this event!";}
-
                         $(".description").empty();
-                        var description = $("<p>").html("Description: @eventDescription");
+                        var description = $("<p>").html("Description: @Html.Raw(eventModel.Description)");
                         description.appendTo(".description");
 
                         $(".address").empty();
@@ -261,7 +259,7 @@
             });
         </script>
     </text>
-    }
+}
 
 
 

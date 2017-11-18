@@ -21,7 +21,7 @@ namespace CalgaryHacks.EventDtos
         public static string ToJson(this List<PlaygroundEquipmentDTO> self) => JsonConvert.SerializeObject(self, Converter.Settings);
         public static string ToJson(this List<QualityOfLifeDTO> self) => JsonConvert.SerializeObject(self, Converter.Settings);
         public static string ToJson(this List<AirQualityDTO> self) => JsonConvert.SerializeObject(self, Converter.Settings);
-
+        public static string ToJson(this MeetupEventsDTO self) => JsonConvert.SerializeObject(self, Converter.Settings);
     }
 
     public class Converter
