@@ -68,46 +68,48 @@
     var todaysEvents = Model.Events.Where(x => x.EventDate >= todaysDate && x.EventDate <= tomorrowsDate).ToList();
     var tomorrowsEvents = Model.Events.Where(x => x.EventDate >= tomorrowsDate && x.EventDate <= endOfTomorrowsDate).ToList();
 }
+<div class="container-fluid">
+    <!--Today's Events -->
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <h3><small>EVENTS HAPPENING TODAY <span class="badge">@todaysEvents.Count()</span></small></h3>
+        <hr>
+        @foreach (var eventModel in todaysEvents)
+        {
+            var eventDescription = eventModel.Description ?? "No Description Available";
 
-<!--Today's Events -->
-<div class="col-sm-12 col-md-12 col-lg-12">
-    <h3><small>EVENTS HAPPENING TODAY <span class="badge">@todaysEvents.Count()</span></small></h3>
-    <hr>
-    @foreach (var eventModel in todaysEvents)
-    {
-        var eventDescription = eventModel.Description ?? "No Description Available";
-
-        <h3>@eventModel.Name</h3>
-        <h5><span class="glyphicon glyphicon-time"></span> @String.Format("{0:f}", eventModel.EventDate) , @eventModel.Address</h5>
-        <h5><span class="label label-danger">Sporting</span> <span class="label label-primary">Entertainment</span></h5>
+            <h3>@eventModel.Name</h3>
+            <h5><span class="glyphicon glyphicon-time"></span> @String.Format("{0:f}", eventModel.EventDate) , @eventModel.Address</h5>
+            <h5><span class="label label-danger">Sporting</span> <span class="label label-primary">Entertainment</span></h5>
             <br>
             <p> Description:@Html.Raw(eventDescription)</p>
             <p>More Information: <a href="@eventModel.URL"> Buy tickets Now!</a></p>
-        
-        <form action="/Home/ChooseChat" method="post">
 
-            <input type="hidden" name="roomId" value="@eventModel.Id" />
-            <button type="submit" class="btn">Chat Now</button>
-        </form>
-        <br>
-        <br>
+            <form action="/Home/ChooseChat" method="post">
+
+                <input type="hidden" name="roomId" value="@eventModel.Id" />
+                <button type="submit" class="btn">Chat Now</button>
+            </form>
+            <br>
+            <br>
 
 
-    }
+        }
+    </div>
 </div>
 <!--End of Todays Events-->
 <!--Tomorrow's Events-->
-<div class="col-sm-12 col-md-12 col-lg-12">
-    <h3 class="displayEvents" style="cursor:pointer"><small>EVENTS HAPPENING TOMMOROW <span class="badge">@tomorrowsEvents.Count()</span></small></h3>
-    <div class="eventsToggle" style="display: none">
-        <hr>
-        @foreach (var eventModel in tomorrowsEvents)
+<div class="container-fluid">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <h3 class="displayEvents" style="cursor:pointer"><small>EVENTS HAPPENING TOMMOROW <span class="badge">@tomorrowsEvents.Count()</span></small></h3>
+        <div class="eventsToggle" style="display: none">
+            <hr>
+            @foreach (var eventModel in tomorrowsEvents)
             {
                 var eventDescription = eventModel.Description ?? "No Description Available";
 
-            <h3>@eventModel.Name</h3>
-            <h5><span class="glyphicon glyphicon-time"></span>@String.Format("{0:f}", eventModel.EventDate) , @eventModel.Address</h5>
-            <h5><span class="label label-danger">Sporting</span> <span class="label label-primary">Entertainment</span></h5>
+                <h3>@eventModel.Name</h3>
+                <h5><span class="glyphicon glyphicon-time"></span>@String.Format("{0:f}", eventModel.EventDate) , @eventModel.Address</h5>
+                <h5><span class="label label-danger">Sporting</span> <span class="label label-primary">Entertainment</span></h5>
                 <br>
                 <p> Description:@Html.Raw(eventDescription)</p>
                 <p>More Information: <a href="@eventModel.URL"> Buy tickets Now!</a></p>
@@ -116,11 +118,12 @@
                     <input type="hidden" name="roomId" value="@eventModel.Id" />
                     <button type="submit" class="btn">Chat Now</button>
                 </form>
-            <br>
-            <br>
+                <br>
+                <br>
 
 
-        }
+            }
+        </div>
     </div>
 </div>
 <!--End of Tomorrow's Events-->
@@ -240,10 +243,6 @@
                         var event = $("<p>").html("@eventModel.Name");
                         event.appendTo(".event");
                         $('#roomId').val("@eventModel.Id");
-
-                        $(".description").empty();
-                        var description = $("<p>").html("Description: @Html.Raw(eventModel.Description)");
-                        description.appendTo(".description");
 
                         $(".address").empty();
                         var address = $("<p>").html("Address: @eventModel.Address");
