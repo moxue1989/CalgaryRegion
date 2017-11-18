@@ -66,7 +66,7 @@ namespace CalgaryHacks.Controllers
                     "Welcome to Calgary chat,\n " +
                     "We hope you have a good time with all the different events, feel free to hop into any of the chatrooms to begin the conversion with your peers.\n\n" +
                     "Regards,\n" + "Calgary Events Team");
-                return RedirectToAction("Chat", "Home");
+                return RedirectToAction("ChooseChat", "Home");
             }
             return View();
         }

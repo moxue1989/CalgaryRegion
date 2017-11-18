@@ -14,6 +14,10 @@ namespace CalgaryHacks.Apis
 
         public static string SendEmail(string emailAddress, string emailTitle, string emailBody)
         {
+            if (FromEmail == null || Password == null)
+            {
+                return "not on cloud";
+            }
             return SendEmail(new List<string> { emailAddress }, emailTitle, emailBody);
         }
 
