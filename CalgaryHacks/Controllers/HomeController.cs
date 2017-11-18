@@ -158,8 +158,8 @@ namespace CalgaryHacks.Controllers
            // PointsOfInterestsMapper.UpdateCommunityCenterLocations(PointsOfInterestsApi.GetCommunities());
             //PointsOfInterestsMapper.UpdateFireStationLocations(PointsOfInterestsApi.GetFireStationLocations());
            // PointsOfInterestsMapper.UpdatePublicLibraryLocations(PointsOfInterestsApi.GetPublicLibraryLocations());
-            PointsOfInterestsMapper.UpdateRecreationalLocations(PointsOfInterestsApi.GetRecreationalFacilities());
-
+            //PointsOfInterestsMapper.UpdateRecreationalLocations(PointsOfInterestsApi.GetRecreationalFacilities());
+            PointsOfInterestsMapper.UpdatePoliceLocations(PointsOfInterestsApi.GetPoliceStations());
             return View();
         }
     }
