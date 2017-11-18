@@ -25,6 +25,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -178,6 +179,7 @@
     <Compile Include="Apis\EventsApi.cs" />
     <Compile Include="Apis\GoogleMaps.cs" />
     <Compile Include="Apis\IndicatorsOfLifeApi.cs" />
+    <Compile Include="Apis\MeetupGroupsToSig.cs" />
     <Compile Include="Apis\PointsOfInterestsApi.cs" />
     <Compile Include="Apis\PointsOfInterestsMapper.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -199,7 +201,7 @@
     <Compile Include="DatabaseModel\User.cs" />
     <Compile Include="EventDtos\EventfulDTO.cs" />
     <Compile Include="EventDtos\GoogleLocations.cs" />
-    <Compile Include="EventDtos\MeetupEventDTO.cs" />
+    <Compile Include="EventDtos\MeetupEventsDTO.cs" />
     <Compile Include="EventDtos\Serialize.cs" />
     <Compile Include="EventDtos\TicketMasterDTO.cs" />
     <Compile Include="EventDtos\TrumbaDTO.cs" />
@@ -274,6 +276,7 @@
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Home\Register.cshtml" />
     <Content Include="Views\Home\ChooseChat.cshtml" />
+    <Content Include="Views\Home\Analytics.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

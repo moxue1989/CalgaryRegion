@@ -12,6 +12,8 @@ namespace CalgaryHacks.Apis
 {
     public class EventMapper
     {
+        private const string NoDescriptionAvailiable = "No description availiable.";
+
         public static Task UpdateEventsFromTicketMaster(TicketMasterDto ticketMasterEvents)
         {
             DataModel db = new DataModel();
@@ -24,6 +26,15 @@ namespace CalgaryHacks.Apis
                 {
                     Event eventModel = new Event();
                     TicketMasterDtoVenue ticketMasterDtoVenue = ticketMasterEvent.Embedded.Venues[0];
+                    TicketMasterDtoPromoter promoter = ticketMasterEvent.Promoter;
+                    if (promoter != null)
+                    {
+                        eventModel.Description = promoter.Description;
+                    }
+                    else
+                    {
+                        eventModel.Description = NoDescriptionAvailiable;
+                    }
                     eventModel.Latitude = ticketMasterDtoVenue.Location.Latitude;
                     eventModel.Longitude = ticketMasterDtoVenue.Location.Longitude;
                     eventModel.Address = ticketMasterDtoVenue.Address.Line1;
@@ -67,7 +78,9 @@ namespace CalgaryHacks.Apis
                     eventModel.EventfulUniqueId = eventfulEventEvent.Id;
                     eventModel.Name = eventfulEventEvent.Title;
                     eventModel.EventDate = DateTime.ParseExact(eventfulEventEvent.StartTime, "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture);
-                    eventModel.Description = eventfulEventEvent.Description;
+                    eventModel.Description = String.IsNullOrEmpty(eventfulEventEvent.Description)
+                        ? NoDescriptionAvailiable
+                        : eventfulEventEvent.Description;
                     addQuadrantToEvent(eventModel);
                     db.Events.Add(eventModel);
                 }
@@ -107,7 +120,9 @@ namespace CalgaryHacks.Apis
                     eventModel.TrumbaUniqueId = trumbaId;
                     eventModel.Name = attributes.Title;
                     eventModel.EventDate = DateTime.ParseExact(attributes.NextDateDtfmt, "yyyy-MM-dd", CultureInfo.InvariantCulture);
-                    eventModel.Description = attributes.Notes;
+                    eventModel.Description = String.IsNullOrEmpty(attributes.Notes)
+                        ? NoDescriptionAvailiable
+                        : attributes.Notes;
                     addQuadrantToEvent(eventModel);
                     db.Events.Add(eventModel);
                 }
@@ -117,31 +132,32 @@ namespace CalgaryHacks.Apis
             return Task.FromResult(0);
         }
 
-        public static Task UpdateEventsFromMeetup(List<MeetupEventDto> meetupEventDtos)
+        public static Task UpdateEventsFromMeetup(List<MeetupEventsDTOResult> meetupEventDtos)
         {
             DataModel db = new DataModel();
             List<Event> events = db.Events.ToList();
-            foreach (MeetupEventDto meetupEvent in meetupEventDtos)
+            foreach (MeetupEventsDTOResult meetupEvent in meetupEventDtos)
             {
-                Event existingEvent = events.FirstOrDefault(x => x.MeetupUniqueId == meetupEvent.id);
+                Event existingEvent = events.FirstOrDefault(x => x.MeetupUniqueId == meetupEvent.Id);
                 if (existingEvent == null)
                 {
-
                     var eventModel = new Event();
 
-                    MeetupEventDtoVenue eventVenue = meetupEvent.venue;
+                    MeetupEventsDTOVenue eventVenue = meetupEvent.Venue;
                     if (eventVenue == null)
                     {
                         continue;
                     }
-                    eventModel.Latitude = eventVenue.lat.ToString();
-                    eventModel.Longitude = eventVenue.lon.ToString();
-                    eventModel.Address = eventVenue.address_1;
-                    eventModel.URL = meetupEvent.link;
-                    eventModel.MeetupUniqueId = meetupEvent.id;
-                    eventModel.Name = meetupEvent.name;
-                    eventModel.EventDate = GetDateTimeFromEpoch(meetupEvent.time);
-                    eventModel.Description = meetupEvent.description;
+                    eventModel.Latitude = eventVenue.Lat.ToString();
+                    eventModel.Longitude = eventVenue.Lon.ToString();
+                    eventModel.Address = eventVenue.Address1;
+                    eventModel.URL = meetupEvent.EventUrl;
+                    eventModel.MeetupUniqueId = meetupEvent.Id;
+                    eventModel.Name = meetupEvent.Name;
+                    eventModel.EventDate = GetDateTimeFromEpoch(meetupEvent.Time);
+                    eventModel.Description = String.IsNullOrEmpty(meetupEvent.Description)
+                        ? NoDescriptionAvailiable
+                        : meetupEvent.Description;
                     addQuadrantToEvent(eventModel);
                     db.Events.Add(eventModel);
                 }

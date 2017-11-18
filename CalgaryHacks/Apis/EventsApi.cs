@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Threading;
 using System.Threading.Tasks;
 using CalgaryHacks.EventDtos;
 
@@ -25,18 +26,21 @@ namespace CalgaryHacks.Apis
 
         public static async Task GetMeetupEvents()
         {
-            string SIG_ID = "240809776";//Tethered to account
-
-
             HttpClient client = GetNewClient();
-            string SIG = "8beaca3c1807ceb9bd04b402d538e5eb4de6ccaa"; //For this particular API
-            string path = "https://api.meetup.com/self/calendar?photo-host=public&page=200&sig_id=" + SIG_ID +
-                          "&sig=" + SIG;
+            foreach (String groupUrlname in MeetupGroupsToSig.GroupUrlNameToSigDict.Keys)
+            {
+                string path = "https://api.meetup.com/2/events?offset=0&format=json&limited_events=False&group_urlname="
+                       + groupUrlname
+                       + "&photo-host=public&time=0m%2C1m&page=200&fields=&order=time&desc=false&status=upcoming&sig_id="
+                       + MeetupGroupsToSig.SIG_ID
+                       + "&sig=" + MeetupGroupsToSig.GroupUrlNameToSigDict[groupUrlname];
 
-            HttpResponseMessage response = client.GetAsync(path).Result;
-
-            List<MeetupEventDto> meetupEventDtos = response.Content.ReadAsAsync<List<MeetupEventDto>>().Result;
-            await EventMapper.UpdateEventsFromMeetup(meetupEventDtos);
+                HttpResponseMessage response = client.GetAsync(path).Result;
+                string result = response.Content.ReadAsStringAsync().Result;
+                MeetupEventsDTO meetupEventsDto = MeetupEventsDTO.FromJson(result);
+                await EventMapper.UpdateEventsFromMeetup(meetupEventsDto.Results);
+                Thread.Sleep(500);
+            }
         }
 
         public static async Task GetTicketMasterEvents()
