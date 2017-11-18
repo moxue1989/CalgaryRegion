@@ -1,9 +1,6 @@
 namespace CalgaryHacks.DatabaseModel
 {
-    using System;
     using System.Data.Entity;
-    using System.ComponentModel.DataAnnotations.Schema;
-    using System.Linq;
 
     public class DataModel : DbContext
     {
@@ -15,6 +12,7 @@ namespace CalgaryHacks.DatabaseModel
         public virtual DbSet<Event> Events { get; set; }
         public virtual DbSet<Location> Locations { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<PointsOfInterest> PointsOfInterest { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

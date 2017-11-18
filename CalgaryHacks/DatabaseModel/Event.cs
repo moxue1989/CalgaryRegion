@@ -34,6 +34,8 @@ namespace CalgaryHacks.DatabaseModel
         //Description of the event
         public string Description { get; set; }
 
+        public string Quadrant { get; set; }
+
         [JsonIgnore]
         public virtual ICollection<User> Users { get; set; }
     }

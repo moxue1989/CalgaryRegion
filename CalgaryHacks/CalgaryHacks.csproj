@@ -177,11 +177,16 @@
     <Compile Include="Apis\EventMapper.cs" />
     <Compile Include="Apis\EventsApi.cs" />
     <Compile Include="Apis\GoogleMaps.cs" />
+    <Compile Include="Apis\IndicatorsOfLifeApi.cs" />
+    <Compile Include="Apis\PointsOfInterestsApi.cs" />
+    <Compile Include="Apis\PointsOfInterestsMapper.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="CalgaryQuandrants\QuadrantIdentifier.cs" />
+    <Compile Include="CalgaryQuandrants\Quadrants.cs" />
     <Compile Include="ChatHub\ChatHub.cs" />
     <Compile Include="Controllers\DefaultController.cs" />
     <Compile Include="Controllers\EventController.cs" />
@@ -190,6 +195,7 @@
     <Compile Include="DatabaseModel\Event.cs" />
     <Compile Include="DatabaseModel\EventCache.cs" />
     <Compile Include="DatabaseModel\Location.cs" />
+    <Compile Include="DatabaseModel\PointsOfInterest.cs" />
     <Compile Include="DatabaseModel\User.cs" />
     <Compile Include="EventDtos\EventfulDTO.cs" />
     <Compile Include="EventDtos\GoogleLocations.cs" />
@@ -199,6 +205,25 @@
     <Compile Include="EventDtos\TrumbaDTO.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="EventDtos\IndicatorDTOs\AirQualityDTO.cs" />
+    <Compile Include="EventDtos\IndicatorDTOs\QualityOfLifeDTO.cs" />
+    <Compile Include="EventDtos\LocationDTOs\CommunityPointsDTO.cs" />
+    <Compile Include="EventDtos\LocationDTOs\FireStationServicesDTO.cs" />
+    <Compile Include="EventDtos\LocationDTOs\Loc.cs" />
+    <Compile Include="EventDtos\LocationDTOs\ParksSportEquipmentDTO.cs" />
+    <Compile Include="EventDtos\LocationDTOs\PlaygroundEquipmentDTO.cs" />
+    <Compile Include="EventDtos\LocationDTOs\PublicLibraryDTO.cs" />
+    <Compile Include="EventDtos\LocationDTOs\RecreationFacilitiesDTO.cs" />
+    <Compile Include="EventDtos\LocationDTOs\SchoolsDTO.cs" />
+    <Compile Include="EventDtos\LocationDTOs\TransitLRTStationsDTO.cs" />
+    <Compile Include="Migrations\201711181704530_pointsofinterest.cs" />
+    <Compile Include="Migrations\201711181704530_pointsofinterest.Designer.cs">
+      <DependentUpon>201711181704530_pointsofinterest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201711181745300_event-quadrant.cs" />
+    <Compile Include="Migrations\201711181745300_event-quadrant.Designer.cs">
+      <DependentUpon>201711181745300_event-quadrant.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ViewModels.cs" />
@@ -267,6 +292,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201711181704530_pointsofinterest.resx">
+      <DependentUpon>201711181704530_pointsofinterest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711181745300_event-quadrant.resx">
+      <DependentUpon>201711181745300_event-quadrant.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

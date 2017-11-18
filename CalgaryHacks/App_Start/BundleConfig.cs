@@ -1,5 +1,4 @@
-﻿using System.Web;
-using System.Web.Optimization;
+﻿using System.Web.Optimization;
 
 namespace CalgaryHacks
 {
@@ -26,6 +25,9 @@ namespace CalgaryHacks
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
+
+            bundles.Add(new ScriptBundle("~/bundles/gmaps").Include(
+                "~/Scripts/gmaps.js"));
         }
     }
 }

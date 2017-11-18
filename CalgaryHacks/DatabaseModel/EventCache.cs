@@ -18,7 +18,9 @@ namespace CalgaryHacks.DatabaseModel
         {
             _eventBag = new ConcurrentBag<Event>();
             DateTime yesterday = DateTime.Now.AddDays(-1);
-            List<Event> events = Db.Events.Where(x => x.EventDate > yesterday).ToList();
+            List<Event> events = Db.Events.Where(x => x.EventDate > yesterday)
+                .OrderBy(y => y.EventDate)
+                .ToList();
             foreach (Event eventObject in events)
             {
                 _eventBag.Add(eventObject);

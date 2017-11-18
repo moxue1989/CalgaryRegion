@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
+using CalgaryHacks.CalgaryQuandrants;
 using CalgaryHacks.DatabaseModel;
 using CalgaryHacks.EventDtos;
+using CalgaryHacks.EventDtos.LocationDTOs;
 
 namespace CalgaryHacks.Apis
 {
@@ -29,13 +31,22 @@ namespace CalgaryHacks.Apis
                     eventModel.TicketMasterUniqueId = ticketMasterEvent.Id;
                     eventModel.Name = ticketMasterEvent.Name;
                     eventModel.EventDate = Convert.ToDateTime(ticketMasterEvent.Dates.Start.DateTime);
-
+                    addQuadrantToEvent(eventModel);
                     db.Events.Add(eventModel);
                 }
             }
             db.SaveChanges();
 
             return Task.FromResult(0);
+        }
+
+        private static void addQuadrantToEvent(Event eventModel)
+        {
+            double lat, lng;
+            if (Double.TryParse(eventModel.Latitude, out lat) && Double.TryParse(eventModel.Longitude, out lng))
+            {
+                eventModel.Quadrant = QuadrantIdentifier.getLocationInCalgary(new Loc(lat, lng));
+            }
         }
 
         public static Task UpdateEventsFromEventful(Eventful eventfulEvent)
@@ -57,7 +68,7 @@ namespace CalgaryHacks.Apis
                     eventModel.Name = eventfulEventEvent.Title;
                     eventModel.EventDate = DateTime.ParseExact(eventfulEventEvent.StartTime, "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture);
                     eventModel.Description = eventfulEventEvent.Description;
-
+                    addQuadrantToEvent(eventModel);
                     db.Events.Add(eventModel);
                 }
             }
@@ -97,7 +108,7 @@ namespace CalgaryHacks.Apis
                     eventModel.Name = attributes.Title;
                     eventModel.EventDate = DateTime.ParseExact(attributes.NextDateDtfmt, "yyyy-MM-dd", CultureInfo.InvariantCulture);
                     eventModel.Description = attributes.Notes;
-
+                    addQuadrantToEvent(eventModel);
                     db.Events.Add(eventModel);
                 }
             }
@@ -131,7 +142,7 @@ namespace CalgaryHacks.Apis
                     eventModel.Name = meetupEvent.name;
                     eventModel.EventDate = GetDateTimeFromEpoch(meetupEvent.time);
                     eventModel.Description = meetupEvent.description;
-
+                    addQuadrantToEvent(eventModel);
                     db.Events.Add(eventModel);
                 }
             }
