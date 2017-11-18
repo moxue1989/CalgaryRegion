@@ -16,11 +16,6 @@ namespace CalgaryHacks.Controllers
 
         public ActionResult Index()
         {
-            //            var events = EventsApi.GetEventfulEvents();
-            //            var trumba = EventsApi.GetTrumbaEvents();
-            //            var ticketMaster = EventsApi.GetTicketMasterEvents();
-
-//                        EventsApi.UpdateEvents();
             ViewModels.EventViewModel eventViewModel = new ViewModels.EventViewModel();
             eventViewModel.Events = EventCache.GetEventBag().ToList();
             return View(eventViewModel);
@@ -104,15 +99,21 @@ namespace CalgaryHacks.Controllers
             return View();
         }
 
-        public ActionResult Chat(int roomId)
+        public ActionResult Chat(string roomId)
         {
+            int roomIdint;
+            if (!Int32.TryParse(roomId, out roomIdint))
+            {
+                RedirectToAction("Index", "Home");
+            }
+
             User user = (User)HttpContext.Session["user"];
             if (user == null)
             {
                 return RedirectToAction("Login", "Home");
             }
             ViewBag.roomId = roomId;
-            ViewBag.roomName = EventCache.GetEventBag().FirstOrDefault(x => x.Id == roomId)?.Name;
+            ViewBag.roomName = EventCache.GetEventBag().FirstOrDefault(x => x.Id == roomIdint)?.Name;
             return View(user);
         }
 
