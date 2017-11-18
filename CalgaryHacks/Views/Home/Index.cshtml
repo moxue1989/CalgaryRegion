@@ -71,30 +71,33 @@
 
 <!--Today's Events -->
 <div class="col-sm-12 col-md-12 col-lg-12">
-    <h3><small>EVENTS HAPPENING TODAY <span class="badge">@todaysEvents.Count()</span></small></h3>
-    <hr>
-    @foreach (var eventModel in todaysEvents)
-    {
-        var eventDescription = eventModel.Description ?? "No Description Available";
+        <h3 class="displayEvents" style="cursor:pointer"><small>EVENTS HAPPENING TODAY <span class="badge">@todaysEvents.Count()</span></small></h3>
+        <div class="eventsToggle">
 
-        <h3>@eventModel.Name</h3>
-        <h5><span class="glyphicon glyphicon-time"></span> @String.Format("{0:f}", eventModel.EventDate) , @eventModel.Address</h5>
-        <h5><span class="label label-danger">Sporting</span> <span class="label label-primary">Entertainment</span></h5>
-            <br>
-            <p> Description:@Html.Raw(eventDescription)</p>
-            <p>More Information: <a href="@eventModel.URL"> Buy tickets Now!</a></p>
-        
-        <form action="/Home/ChooseChat" method="post">
+            <hr>
+            @foreach (var eventModel in todaysEvents)
+            {
+                var eventDescription = eventModel.Description ?? "No Description Available";
 
-            <input type="hidden" name="roomId" value="@eventModel.Id" />
-            <button type="submit" class="btn">Chat Now</button>
-        </form>
-        <br>
-        <br>
+                <h3>@eventModel.Name</h3>
+                <h5><span class="glyphicon glyphicon-time"></span> @String.Format("{0:f}", eventModel.EventDate) , @eventModel.Address</h5>
+                <h5><span class="label label-danger">Sporting</span> <span class="label label-primary">Entertainment</span></h5>
+                <br>
+                <p> Description:@Html.Raw(eventDescription)</p>
+                <p>More Information: <a href="@eventModel.URL"> Buy tickets Now!</a></p>
+
+                <form action="/Home/ChooseChat" method="post">
+
+                    <input type="hidden" name="roomId" value="@eventModel.Id" />
+                    <button type="submit" class="btn">Chat Now</button>
+                </form>
+                <br>
+                <br>
 
 
-    }
-</div>
+            }
+        </div>
+    </div>
 <!--End of Todays Events-->
 <!--Tomorrow's Events-->
 <div class="col-sm-12 col-md-12 col-lg-12">
@@ -207,9 +210,15 @@
         }); //end of geolocate
 
         $("#eventMarker").hide();
+        $(".displayEvents:first").show();
+
 
         $(".displayEvents").click(function () {
-            $(".eventsToggle").toggle(1000);
+            $(this).next().toggle(1000);
+            $('html, body').animate({
+                scrollTop: $(this).offset().top
+            }, 1000);
+            
         });
 
 
