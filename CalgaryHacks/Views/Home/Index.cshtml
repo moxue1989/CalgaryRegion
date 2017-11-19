@@ -28,10 +28,10 @@
     <div class="row">
         <!--Here is the map -->
         <!--Column 1-->
-        <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 popin" id="map"></div>
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 popin" id="map"></div>
 
         <!--Column 2-->
-        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 container fadein" style="display: none;">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 container fadein" style="display: none;">
 
             <div class="panel panel-primary text-center">
                 <div class="panel-heading">
@@ -41,11 +41,10 @@
                     <p class="fadein">Temperature: <strong id="temperature"></strong></p>
                     <p class="address">Address:</p>
                     <p class="eventDate">Date:</p>
-                    <p class="description">Description:</p>
+                    <p class="url">Click here for more information</p>
                 </div>
 
                 <div class="panel-footer">
-                    <p class="url">Click here for more information</p>
                     @using (Html.BeginForm("ChooseChat", "Home", FormMethod.Post))
                     {
                         <input type="hidden" id="roomId" name="roomId" />
@@ -56,8 +55,6 @@
         </div>
     </div>
 </div>
-
-
 
 <!--Here we begin using the code for the events based on today-->
 @{
@@ -83,8 +80,8 @@
             <h5><span class="glyphicon glyphicon-time"></span> @String.Format("{0:f}", eventModel.EventDate) , @eventModel.Address</h5>
             <h5><span class="label label-danger">Sporting</span> <span class="label label-primary">Entertainment</span></h5>
             <br>
-            <p> Description: @Html.Raw(eventDescription)</p>
-            <p>More Information: <a href="@eventModel.URL"> Buy tickets Now!</a></p>
+            <p> Description:@Html.Raw(eventDescription)</p>
+            <p>More Information: <a href="@eventModel.URL"> Click here for more information!</a></p>
 
             <form action="/Home/ChooseChat" method="post">
 
@@ -147,7 +144,7 @@
             lat: 51.044308,
             lng: -114.0652801,
             width: '100%',
-            height: '375px',
+            height: '400px',
             zoom: 14
         });
         //width 650px height 500px
@@ -255,7 +252,7 @@
                         address.appendTo(".address");
 
                         $(".url").empty();
-                        var url = $("<p>").html("<a href='@eventModel.URL'>Click here for more information");
+                        var url = $("<p>").html("<a href='@eventModel.URL'>Click here for more Information");
                         url.appendTo(".url");
 
                         $(".eventDate").empty();
