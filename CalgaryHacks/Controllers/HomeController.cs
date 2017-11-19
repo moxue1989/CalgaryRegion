@@ -1,14 +1,9 @@
-﻿
-using System;
-using System.Collections.Generic;
+﻿using CalgaryHacks.Apis;
+using CalgaryHacks.DatabaseModel;
+using CalgaryHacks.Models;
 using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
-using System.Web.WebSockets;
-using CalgaryHacks.Apis;
-using CalgaryHacks.DatabaseModel;
-using CalgaryHacks.Models;
-using Microsoft.Ajax.Utilities;
 
 namespace CalgaryHacks.Controllers
 {
@@ -179,8 +174,7 @@ namespace CalgaryHacks.Controllers
 
             quadrantModel.Events = EventCache.GetEventBag().Where(x => x.Quadrant == quadrant).ToList();
             quadrantModel.PointsOfInterests = PointsOfInterestCache.GetPointsOfInterestBag().Where(x => x.Location == quadrant).ToList();
-
-          
+            
             switch (quadrant)
             {
                 case "NW":
