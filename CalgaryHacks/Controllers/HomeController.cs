@@ -16,11 +16,6 @@ namespace CalgaryHacks.Controllers
 
         public ActionResult Index()
         {
-            //            var events = EventsApi.GetEventfulEvents();
-            //            var trumba = EventsApi.GetTrumbaEvents();
-            //            var ticketMaster = EventsApi.GetTicketMasterEvents();
-
-//                        EventsApi.UpdateEvents();
             ViewModels.EventViewModel eventViewModel = new ViewModels.EventViewModel();
             eventViewModel.Events = EventCache.GetEventBag().ToList();
             return View(eventViewModel);
@@ -71,7 +66,7 @@ namespace CalgaryHacks.Controllers
                     "Welcome to Calgary chat,\n " +
                     "We hope you have a good time with all the different events, feel free to hop into any of the chatrooms to begin the conversion with your peers.\n\n" +
                     "Regards,\n" + "Calgary Events Team");
-                return RedirectToAction("Chat", "Home");
+                return RedirectToAction("ChooseChat", "Home");
             }
             return View();
         }
@@ -94,9 +89,14 @@ namespace CalgaryHacks.Controllers
             if (ModelState.IsValid)
             {
                 User user = db.Users.FirstOrDefault(a => a.Email == login.Email && a.Password == login.Password);
+
                 if (user != null)
                 {
                     HttpContext.Session["user"] = user;
+                    if (user.Events.Count != 0)
+                    {
+                        return RedirectToAction("ChooseChat", "Home");
+                    }
                     return RedirectToAction("Index", "Home");
                 }
                 ViewBag.Message = "Incorrect Email/Password";
@@ -106,6 +106,7 @@ namespace CalgaryHacks.Controllers
 
         public ActionResult Chat(int roomId)
         {
+
             User user = (User)HttpContext.Session["user"];
             if (user == null)
             {

@@ -201,6 +201,7 @@
     <Compile Include="DatabaseModel\User.cs" />
     <Compile Include="EventDtos\EventfulDTO.cs" />
     <Compile Include="EventDtos\GoogleLocations.cs" />
+    <Compile Include="EventDtos\IndicatorDTOs\OtherQOLIndicators.cs" />
     <Compile Include="EventDtos\LocationDTOs\PoliceServiceOfficesDTO.cs" />
     <Compile Include="EventDtos\MeetupEventsDTO.cs" />
     <Compile Include="EventDtos\Serialize.cs" />

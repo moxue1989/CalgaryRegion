@@ -1,5 +1,6 @@
-﻿@using CalgaryHacks.EventDtos
-@model List<PointsOfInterest>
+﻿@using CalgaryHacks.DatabaseModel
+@using CalgaryHacks.EventDtos
+@model List<CalgaryHacks.DatabaseModel.PointsOfInterest>
 
 @{
     ViewBag.Title = "Analytics";
@@ -31,38 +32,69 @@
     var iconSize;
     var icons;
     function initMap() {
-        iconSize = new google.maps.Size(dim,dim);
-        icons = {
-            LRTStation:{
-                url: 'LRTStation.png',
-                scaledSize: iconSize
-            },
-            PublicLibrary:{
-                url: 'PublicLibrary.png',
-                scaledSize: iconSize
-            },
-            CommunityCentre:{
-                url: 'CommunityCentre.png',
-                scaledSize: iconSize
-            },
-            PoliceStation:{
-                url: 'PoliceStation.png',
-                scaledSize: iconSize
-            },
-            FireStation:{
-                url: 'FireStation.png',
-                scaledSize: iconSize
-            }
-        };
-        var calgaryMap = { lat: 51.0486, lng: -114.0708 };
-        map = new google.maps.Map(document.getElementById('map'), {
-            zoom: 10,
-            center: calgaryMap
-        });
-        //        var marker = new google.maps.Marker({
-        //            position: calgaryMap,
-        //            map: map
-        //        });
+            iconSize = new google.maps.Size(dim,dim);
+            icons = {
+                CTrain:{
+                    url: '../images/LRTStation.png',
+                    scaledSize: iconSize
+                },
+                Library:{
+                    url: '../images/PublicLibrary.png',
+                    scaledSize: iconSize
+                },
+                CommunityCenter:{
+                    url: '../images/CommunityCentre.png',
+                    scaledSize: iconSize
+                },
+                PoliceStation:{
+                    url: '../images/PoliceStation.png',
+                    scaledSize: iconSize
+                },
+                FireStation:{
+                    url: '../images/FireStation.png',
+                    scaledSize: iconSize
+                }
+            };
+            var calgaryMap = { lat: 51.0486, lng: -114.0708 };
+        map = new google.maps.Map(document.getElementById('map'),
+            {
+                zoom: 10,
+                center: calgaryMap
+            });
+
+        var infowindow = new google.maps.InfoWindow();
+
+        
+            @foreach (var pointOfInterest in Model.Where(x => x.Type == "Police Station" || x.Type == "Fire Station" || x.Type == "Library" ))
+            {
+             <text>
+                 var myLatLng = { lat: @pointOfInterest.Latitude, lng: @pointOfInterest.Longitude };
+                 var contentPOI = '@pointOfInterest.Name' + ' @pointOfInterest.Type';
+
+           
+            var marker = new google.maps.Marker(
+                {
+                position: myLatLng,
+                map: map,
+                icon: icons.@Html.Raw(@pointOfInterest.Type.Replace(" ",""))
+                     });
+
+                 google.maps.event.addListener(marker,
+                     'click',
+                     (function(marker, contentPOI) {
+                         return function() {
+                             infowindow.setContent(contentPOI);
+                             infowindow.open(map, marker);
+                         }
+                     })(marker,contentPOI));
+               
+             </text>
+
+
+
+             }
+      
+
 
         //NOTE: This it in LONG/LAT AND NOT LAT LONG
         ////////////////////////////////////////////////////////////////////   CALGARY NE SECTION OF THE MAP////////////////////////////////////////////////////////////////////////////////////
@@ -183,29 +215,29 @@
         //Constructing the polygon
         var calgaryNE = new google.maps.Polygon({
             paths: calgaryNEPoints,
-            strokeColor: '#FF0000',
+            strokeColor: ' #ffff00',
             strokeOpacity: 0.8,
             strokeWeight: 3,
-            fillColor: '#FF0000',
+            fillColor: ' #ffff00',
             fillOpacity: 0.35
         });
 
         calgaryNE.setMap(map);
 
         //working on the info window here
-        var contentString = "<p>Hello Calgary NE</p>";
-
-        infoWindowCalgaryNE = new google.maps.InfoWindow({
-            content: contentString
-
-        });
-
-        calgaryNE.addListener('click', function (evt) {
-
-            infoWindowCalgaryNE.setPosition(evt.latLng);
-            infoWindowCalgaryNE.open(map);
-
-        });
+//        var contentString = "<p>Hello Calgary NE</p>";
+//
+//        infoWindowCalgaryNE = new google.maps.InfoWindow({
+//            content: contentString
+//
+//        });
+//
+//        calgaryNE.addListener('click', function (evt) {
+//
+//            infoWindowCalgaryNE.setPosition(evt.latLng);
+//            infoWindowCalgaryNE.open(map);
+//
+//        });
 
         ////////////////////////////////////////////////////////////////////////////////END OF THE CALGARY NE SECTION OF THE MAP///////////////////////////////////////////////////////////////////
 
@@ -405,29 +437,29 @@
         //Constructing the polygon
         var calgarySW = new google.maps.Polygon({
             paths: calgarySWPoints,
-            strokeColor: '#FF0000',
+            strokeColor: '#3333ff',
             strokeOpacity: 0.8,
             strokeWeight: 3,
-            fillColor: '#FF0000',
+            fillColor: '#3333ff',
             fillOpacity: 0.35
         });
 
         calgarySW.setMap(map);
 
         //working on the info window here
-        var contentString = "<p>Hello Calgary SW</p>";
-
-        infoWindowCalgarySW = new google.maps.InfoWindow({
-            content: contentString
-
-        });
-
-        calgarySW.addListener('click', function (evt) {
-
-            infoWindowCalgarySW.setPosition(evt.latLng);
-            infoWindowCalgarySW.open(map);
-
-        });
+//        var contentString = "<p>Hello Calgary SW</p>";
+//
+//        infoWindowCalgarySW = new google.maps.InfoWindow({
+//            content: contentString
+//
+//        });
+//
+//        calgarySW.addListener('click', function (evt) {
+//
+//            infoWindowCalgarySW.setPosition(evt.latLng);
+//            infoWindowCalgarySW.open(map);
+//
+//        });
 
         /////////////////////////////////////////////////////////////////////////////////////////END OF CALGARY SW SECTION//////////////////////////////////////////////////////////////////////////////////
 
@@ -1131,29 +1163,29 @@
         //Constructing the polygon
         var calgarySE = new google.maps.Polygon({
             paths: calgarySEPoints,
-            strokeColor: '#FF0000',
+            strokeColor: '#009900',
             strokeOpacity: 0.8,
             strokeWeight: 3,
-            fillColor: '#FF0000',
+            fillColor: '#009900',
             fillOpacity: 0.35
         });
 
         calgarySE.setMap(map);
 
         //working on the info window here
-        var contentString = "<p>Hello Calgary SE</p>";
-
-        infoWindowCalgarySE = new google.maps.InfoWindow({
-            content: contentString
-
-        });
-
-        calgarySE.addListener('click', function (evt) {
-
-            infoWindowCalgarySE.setPosition(evt.latLng);
-            infoWindowCalgarySE.open(map);
-
-        });
+//        var contentString = "<p>Hello Calgary SE</p>";
+//
+//        infoWindowCalgarySE = new google.maps.InfoWindow({
+//            content: contentString
+//
+//        });
+//
+//        calgarySE.addListener('click', function (evt) {
+//
+//            infoWindowCalgarySE.setPosition(evt.latLng);
+//            infoWindowCalgarySE.open(map);
+//
+//        });
 
         ///////////////////////////////////////////////////////////////////ENDING OF THE CALGARY SE SECTION///////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -1482,20 +1514,20 @@
 
         calgaryNW.setMap(map);
 
-        //working on the info window here
-        var contentString = "<p>Hello Calgary NW</p>";
-
-        infoWindowCalgaryNW = new google.maps.InfoWindow({
-            content: contentString
-
-        });
-
-        calgaryNW.addListener('click', function (evt) {
-
-            infoWindowCalgaryNW.setPosition(evt.latLng);
-            infoWindowCalgaryNW.open(map);
-
-        });
+//        //working on the info window here
+//        var contentString = "<p>Hello Calgary NW</p>";
+//
+//        infoWindowCalgaryNW = new google.maps.InfoWindow({
+//            content: contentString
+//
+//        });
+//
+//        calgaryNW.addListener('click', function (evt) {
+//
+//            infoWindowCalgaryNW.setPosition(evt.latLng);
+//            infoWindowCalgaryNW.open(map);
+//
+//        });
 
         ///////////////////////////////////////////////////////////////////////END OF THE CALGARY NW SECTION////////////////////////////////////////////////////////////////////////////
 
@@ -1503,25 +1535,7 @@
 
     }//End of the initmap function
 </script>
-<script>
-    $(document).ready(function() {
-        @foreach (var pointOfInterest in Model)
-        {
-            <text>
-                map.addMarker({
-                    lat: @pointOfInterest.Latitude,
-                    lng: @pointOfInterest.Longitude,
-                    title: '@pointOfInterest.Name',
-                    icon: icons.@pointOfInterest.Type.Replace(" ", ""),
-                    infoWindow: { content: '<b>@pointOfInterest.Name</b> <p>@pointOfInterest.Address</p>' },
-                    click: function(e) {
-//CLICK
-                    }
-                });
-            </text>
-        }
-    });
-</script>
+
     <script async defer
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCi84qEblX_oHY4fLUW8pjliIsrXZJs3eI&callback=initMap">
     </script>

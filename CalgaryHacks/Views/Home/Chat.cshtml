@@ -71,6 +71,7 @@
             };
 
             chat.client.displayAllUsers = function (users) {
+                $('#users').html("");
                 for (var i = 0; i < users.length; i++) {
                     $('#users').append(users[i] + "<br/>");
                 }
