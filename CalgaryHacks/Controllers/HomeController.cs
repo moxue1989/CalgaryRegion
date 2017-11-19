@@ -20,6 +20,10 @@ namespace CalgaryHacks.Controllers
             eventViewModel.Events = EventCache.GetEventBag().ToList();
             return View(eventViewModel);
         }
+        public ActionResult About()
+        {
+            return View();
+        }
 
         public ActionResult Register()
         {
@@ -113,8 +117,11 @@ namespace CalgaryHacks.Controllers
                 return RedirectToAction("Login", "Home");
             }
             ViewBag.roomId = roomId;
-            ViewBag.roomName = EventCache.GetEventBag().FirstOrDefault(x => x.Id == roomId)?.Name;
-            return View(user);
+            Event currentEvent = EventCache.GetEventBag().FirstOrDefault(x => x.Id == roomId);
+            ViewModels.ChatModel chatModel = new ViewModels.ChatModel();
+            chatModel.User = user;
+            chatModel.CurrentEvent = currentEvent;
+            return View(chatModel);
         }
 
         public ActionResult ChooseChat()
