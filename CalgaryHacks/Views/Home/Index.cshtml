@@ -48,7 +48,7 @@
                     @using (Html.BeginForm("ChooseChat", "Home", FormMethod.Post))
                     {
                         <input type="hidden" id="roomId" name="roomId" />
-                        <button type="submit" class="btn btn-primary">Chat Now</button>
+                        <button type="submit" class="btn">Chat Now</button>
                     }
                 </div>
             </div>
@@ -78,7 +78,22 @@
 
             <h3>@eventModel.Name</h3>
             <h5><span class="glyphicon glyphicon-time"></span> @String.Format("{0:f}", eventModel.EventDate) , @eventModel.Address</h5>
-            <h5><span class="label label-danger">Sporting</span> <span class="label label-primary">Entertainment</span></h5>
+                <h5>
+                    @if (eventModel.Name.Contains("Ice") || eventModel.Name.Contains("Games") ||eventModel.Name.Contains("Hitmen") || eventModel.Name.Contains("Dodgeball") || eventModel.Name.Contains("Soccer") || eventModel.Name.Contains("Park") || eventModel.Name.Contains("Sport") || eventModel.Name.Contains("Stampeders") || eventModel.Name.Contains("Hike") || eventModel.Name.Contains("Therapy"))
+                    {
+                        <span class="label label-danger">Sporting</span>
+                    }
+                    
+                    @if (eventModel.Name.Contains("Meeting") || eventModel.Name.Contains("Board") || eventModel.Name.Contains("Plan") || eventModel.Name.Contains("Growth")|| eventModel.Name.Contains("Training"))
+                    {
+                        <span class="label label-success">Learning</span>
+                    }
+                    <span class="label label-primary">Entertainment</span>
+                    @if (eventModel.Name.Contains("eat") || eventModel.Name.Contains("Food"))
+                    {
+                        <span class="label label-warning">Food</span>
+                    }
+                </h5>
             <br>
             <p> Description:@Html.Raw(eventDescription)</p>
             <p>More Information: <a href="@eventModel.URL"> Click here for more information!</a></p>
@@ -86,7 +101,7 @@
             <form action="/Home/ChooseChat" method="post">
 
                 <input type="hidden" name="roomId" value="@eventModel.Id" />
-                <button type="submit" class="btn btn-primary">Chat Now</button>
+                <button type="submit" class="btn">Chat Now</button>
             </form>
             <br>
             <br>
@@ -108,14 +123,28 @@
 
                 <h3>@eventModel.Name</h3>
                 <h5><span class="glyphicon glyphicon-time"></span>@String.Format("{0:f}", eventModel.EventDate) , @eventModel.Address</h5>
-                <h5><span class="label label-danger">Sporting</span> <span class="label label-primary">Entertainment</span></h5>
+               
+                <h5>  @if (eventModel.Name.Contains("Ice") || eventModel.Name.Contains("Games") ||eventModel.Name.Contains("Hitmen") || eventModel.Name.Contains("Dodgeball") || eventModel.Name.Contains("Soccer") || eventModel.Name.Contains("Park") || eventModel.Name.Contains("Sport") || eventModel.Name.Contains("Stampeders") || eventModel.Name.Contains("Hike") || eventModel.Name.Contains("Therapy"))
+                      {
+                          <span class="label label-danger">Sporting</span>
+                      }
+                    
+                    @if (eventModel.Name.Contains("Meeting") || eventModel.Name.Contains("Board") || eventModel.Name.Contains("Plan") || eventModel.Name.Contains("Growth")|| eventModel.Name.Contains("Training"))
+                    {
+                        <span class="label label-success">Learning</span>
+                    }
+                    <span class="label label-primary">Entertainment</span>
+                    @if (eventModel.Name.Contains("eat") || eventModel.Name.Contains("Food"))
+                    {
+                        <span class="label label-warning">Food</span>
+                    }</h5>
                 <br>
                 <p> Description:@Html.Raw(eventDescription)</p>
                 <a href="@eventModel.URL">Click here for more information</a>
 
                 <form action="/Home/ChooseChat" method="post">
                     <input type="hidden" name="roomId" value="@eventModel.Id" />
-                    <button type="submit" class="btn btn-primary">Chat Now</button>
+                    <button type="submit" class="btn ">Chat Now</button>
                 </form>
                 <br>
                 <br>

@@ -1,0 +1,119 @@
+﻿@model dynamic
+
+@{
+    ViewBag.Title = "Documentation";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Documentation</h2>
+<h5>Here we will discuss what technologies we used, and the data we collected to create this project. We created this project using <b>.NET MVC</b> and used <b>Bootstrap, Javascript, Chart.js JQuery, Google Maps, GMaps, Signal R</b> on the client side
+    For the backend we used <b>Entity Framework, Azure Cloud, LINQ, SQL SERVER</b></h5>
+
+
+<div class="container">
+    <h4>Open Data Calgary EndPoints</h4>
+    <p>The Following data points were used from Open Calgary's Website to complete this project: </p>            
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>EndPoints</th>
+            <th>URL</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr>
+            <td>ArcGiS Open Calgary Events </td>
+            <td><a href="https://gis.calgary.ca/arcgis/rest/services/pub_CalgaryDotCa/Events/MapServer/">https://gis.calgary.ca/arcgis/rest/services/pub_CalgaryDotCa/Events/MapServer</a></td>
+        </tr>
+        <tr>
+            <td>Calgary Public Library</td>
+            <td><a href="https://data.calgary.ca/resource/j5v6-8bqr.json">https://data.calgary.ca/resource/j5v6-8bqr.json</a></td>
+        </tr>
+        <tr>
+            <td>City Quadrants</td>
+            <td><a href="https://data.calgary.ca/Base-Maps/City-Quadrants/g8ma-sywr">https://data.calgary.ca/Base-Maps/City-Quadrants/g8ma-sywrn</a></td>
+        </tr>
+        <tr>
+            <td>School Locations</td>
+            <td><a href="https://data.calgary.ca/resource/gddc-smf3.json">https://data.calgary.ca/resource/gddc-smf3.json</a></td>
+        </tr>
+
+        <tr>
+            <td>Fire Station Locations</td>
+            <td><a href="https://data.calgary.ca/resource/fsqf-xw5a.json">https://data.calgary.ca/resource/fsqf-xw5a.json</a></td>
+        </tr>
+
+        <tr>
+            <td>Community Center Locations </td>
+            <td><a href="https://data.calgary.ca/resource/gddc-smf3.jsonn">https://data.calgary.ca/resource/gddc-smf3.json</a></td>
+        </tr>
+
+        <tr>
+            <td>Transit LRT Station </td>
+            <td><a href="https://data.calgary.ca/resource/5cvt-rikk.json">https://data.calgary.ca/resource/5cvt-rikk.json</a></td>
+        </tr>
+
+        <tr>
+            <td>Recreational Facilities Location </td>
+            <td><a href="https://data.calgary.ca/resource/cedp-v9s9.json">https://data.calgary.ca/resource/cedp-v9s9.json</a></td>
+        </tr>
+
+        <tr>
+            <td>Park Locations </td>
+            <td><a href="https://data.calgary.ca/resource/3ktt-g7vu.json">https://data.calgary.ca/resource/3ktt-g7vu.json</a></td>
+        </tr>
+
+        <tr>
+            <td>Quality of Life </td>
+            <td><a href="https://data.calgary.ca/resource/p83r-pk65.json">https://data.calgary.ca/resource/p83r-pk65.json</a></td>
+        </tr>
+        <tr>
+            <td>Police Station </td>
+            <td><a href="https://data.calgary.ca/resource/my86-b8vn.json">https://data.calgary.ca/resource/my86-b8vn.json</a></td>
+        </tr>
+        <tr>
+            <td>A Prospoerous City</td>
+            <td><a href="https://data.calgary.ca/stories/s/vyy8-9e6b">https://data.calgary.ca/stories/s/vyy8-9e6b</a></td>
+        </tr>
+
+        <tr>
+            <td>City of Inspiring Neighbourhoods</td>
+            <td><a href="https://data.calgary.ca/stories/s/gnpw-mqhd">https://data.calgary.ca/stories/s/gnpw-mqhd</a></td>
+        </tr>
+
+
+
+
+        </tbody>
+    </table>
+</div>
+
+<div class="container">
+    <h4>Other Data EndPoints</h4>
+    <p>We used other endpoints to grab data from events! </p>            
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>EndPoints</th>
+            <th>URL</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr>
+            <td>Meetup </td>
+            <td><a href="https://api.meetup.com/2/events?">https://api.meetup.com/2/events?</a></td>
+        </tr>
+        <tr>
+            <td>TicketMaster</td>
+            <td><a href="https://app.ticketmaster.com/discovery/v2/events.json">https://app.ticketmaster.com/discovery/v2/events.json</a></td>
+        </tr>
+        <tr>
+            <td>Eventful</td>
+            <td><a href="http://api.eventful.com/json/events/search?">http://api.eventful.com/json/events/search?</a></td>
+        </tr>
+       
+        </tbody>
+    </table>
+</div>

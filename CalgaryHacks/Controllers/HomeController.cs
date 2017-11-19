@@ -22,6 +22,11 @@ namespace CalgaryHacks.Controllers
             return View();
         }
 
+        public ActionResult Documentation()
+        {
+            return View();
+        }
+
         public ActionResult Register()
         {
             return View();
