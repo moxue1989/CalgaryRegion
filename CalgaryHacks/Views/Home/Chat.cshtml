@@ -1,12 +1,14 @@
-﻿@model CalgaryHacks.DatabaseModel.User
+﻿@model CalgaryHacks.Models.ViewModels.ChatModel
 
 @{
     ViewBag.Title = "Chat";
 }
-<input type="hidden" id="displayname" value="@Model.Name" />
-<input type="hidden" id="userid" value="@Model.Id" />
+<input type="hidden" id="displayname" value="@Model.User.Name" />
+<input type="hidden" id="userid" value="@Model.CurrentEvent.Id" />
 <input type="hidden" id="currentRoom" value="@ViewBag.roomId" />
-<h4 id="chatRoomName">@ViewBag.roomName</h4>
+<h3>@Model.CurrentEvent.Name</h3>
+<h5><span class="glyphicon glyphicon-time"></span> @String.Format("{0:f}", Model.CurrentEvent.EventDate) , @Model.CurrentEvent.Address</h5>
+<p>More Information: <a href="@Model.CurrentEvent.URL"> Click here for more information!</a></p>
 
 <div class="container-fluid">
     <div class="row">

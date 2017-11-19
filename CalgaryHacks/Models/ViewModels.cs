@@ -44,18 +44,30 @@ namespace CalgaryHacks.Models
         {
             [Required(ErrorMessage = "Name is required.")]
             public string Name { get; set; }
+
             [Required(ErrorMessage = "Phone is required.")]
             public string Phone { get; set; }
+
             [Required(ErrorMessage = "Email is required.")]
             public string Email { get; set; }
+
             [Required(ErrorMessage = "Password is required.")]
             public string Password { get; set; }
+
             [DisplayName("Confirm Password")]
             [Required(ErrorMessage = "Confirm Password is required.")]
             [Compare("Password", ErrorMessage = "Password and Confirm Password must match.")]
             public string ConfirmPassword { get; set; }
+
             public string Latitude { get; set; }
             public string Longitude { get; set; }
+        }
+
+        public class ChatModel
+        {
+            public User User { get; set; }
+
+            public Event CurrentEvent { get; set; }
         }
     }
 }
