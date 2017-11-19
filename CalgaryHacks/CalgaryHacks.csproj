@@ -299,7 +299,6 @@
     <Content Include="Views\Home\Register.cshtml" />
     <Content Include="Views\Home\ChooseChat.cshtml" />
     <Content Include="Views\Home\Analytics.cshtml" />
-    <Content Include="Views\Home\CalgaryNorthWest.cshtml" />
     <Content Include="Views\Home\Quadrants.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
   </ItemGroup>
