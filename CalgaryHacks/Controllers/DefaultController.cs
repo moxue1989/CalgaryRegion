@@ -1,6 +1,7 @@
 ﻿using CalgaryHacks.Apis;
 using System.Collections.Generic;
 using System.Web.Http;
+using CalgaryHacks.DatabaseModel;
 
 namespace CalgaryHacks.Controllers
 {
@@ -15,8 +16,9 @@ namespace CalgaryHacks.Controllers
         // GET: api/Default/5
         public string Get(int id)
         {
+//            EventCache.UpdateEventsFromDb();
 //            EmailSender.SendEmail("mo_xue1989@yahoo.ca", "test email", "this is a test");
-//            EventsApi.UpdateEvents();
+            EventsApi.UpdateEvents();
 //            PointsOfInterestsMapper.UpdateTransitLRTStations(PointsOfInterestsApi.GetTransitLRTLocations());
             return "value";
         }
