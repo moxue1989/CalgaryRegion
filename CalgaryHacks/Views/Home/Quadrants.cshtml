@@ -84,83 +84,82 @@
     </ul>
 
     <div id="map"></div>
-
-    <div class="container">
-        <h2>Analytics Information</h2>
-        <p>The population in the @Model.Quadrant is:</p>
-
-        <!--Population Data-->
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Population</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>@Model.Population</td>
-                </tr>
-            </tbody>
-        </table>
-
-
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Services</th>
-                    <th>Amount</th>
-                    <th>Aggregate (Population/Service)</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Police Stations</td>
-                    <td>@policeCount</td>
-                    <td>@policeCountPerCapita</td>
-                </tr>
-                <tr>
-                    <td>Fire Stations</td>
-                    <td>@fireCount</td>
-                    <td>@fireCountPerCapita</td>
-                </tr>
-                <tr>
-                    <td>Recreational/Community Centers</td>
-                    <td>@communityCenterCount</td>
-                    <td>@CommunityCenterCountPerCapita</td>
-                </tr>
-
-                <tr>
-                    <td>LRT Station</td>
-                    <td>@cTrainCount</td>
-                    <td>@cTrainCountPerCapita</td>
-                </tr>
-
-                <tr>
-                    <td>Libraries</td>
-                    <td>@libraryCount</td>
-                    <td>@libraryCountPerCapita</td>
-                </tr>
+<div class="container">
+    <h2>Analytics Information</h2>
+    <p>The population in the @Model.Quadrant is:</p>            
+    
+    <!--Population Data-->
+    <table class="table table-striped">
+    <thead>
+    <tr>
+        <th>Population</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+    <td>@Model.Population</td>
+        </tr>
+        </tbody>
+    </table>
 
 
-                <tr>
-                    <td>Current Events</td>
-                    <td>@currentEventsCount</td>
-                    <td>@currentEventsPerCapita</td>
-                </tr>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Services</th>
+            <th>Amount</th>
+            <th>Aggregate (Population Per Service)</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>Police Stations</td>
+            <td>@policeCount</td>
+            <td>@policeCountPerCapita</td>
+        </tr>
+        <tr>
+            <td>Fire Stations</td>
+            <td>@fireCount</td>
+            <td>@fireCountPerCapita</td>
+        </tr>
+        <tr>
+            <td>Recreational/Community Centers</td>
+            <td>@communityCenterCount</td>
+            <td>@CommunityCenterCountPerCapita</td>
+        </tr>
+            
+        <tr>
+            <td>LRT Station</td>
+            <td>@cTrainCount</td>
+            <td>@cTrainCountPerCapita</td>
+        </tr>
+            
+        <tr>
+            <td>Libraries</td>
+            <td>@libraryCount</td>
+            <td>@libraryCountPerCapita</td>
+        </tr>
+            
+            
+        <tr>
+            <td>Current Events</td>
+            <td>@currentEventsCount</td>
+            <td>@currentEventsPerCapita</td>
+        </tr>
+            
+        <tr>
+            <td></td>
+            <td></td>
+           
+            <td><b>Total Score:    </b>@totalScore</td>
+        </tr>
 
-                <tr>
-                    <td></td>
-                    <td></td>
 
-                    <td><b>Total Score:    </b>@totalScore</td>
-                </tr>
+        </tbody>
+    </table>
+</div>
 
-
-            </tbody>
-        </table>
-    </div>
-
-    <script>
+<script>
     var map;
     var dim = 25;
     var iconSize;

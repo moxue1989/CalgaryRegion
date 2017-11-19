@@ -304,6 +304,7 @@
     <Content Include="Views\Home\Analytics.cshtml" />
     <Content Include="Views\Home\Quadrants.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Home\Documentation.cshtml" />
     <Content Include="Views\Home\Heatmap.cshtml" />
   </ItemGroup>
   <ItemGroup>
