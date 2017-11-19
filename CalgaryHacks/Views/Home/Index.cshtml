@@ -96,6 +96,7 @@
         }
     </div>
 </div>
+    </div>
 
 <!--End of Todays Events-->
 <!--Tomorrow's Events-->
@@ -145,8 +146,8 @@
             div: '#map',
             lat: 51.044308,
             lng: -114.0652801,
-            width: '38.5em',
-            height: '500px',
+            width: '100%',
+            height: '375px',
             zoom: 14
         });
         //width 650px height 500px
@@ -210,8 +211,6 @@
             }
         }); //end of geolocate
 
-        $("#eventMarker").hide();
-        $(".displayEvents:first").show();
 
 
         $(".displayEvents").click(function () {
