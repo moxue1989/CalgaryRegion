@@ -159,6 +159,10 @@ namespace CalgaryHacks.Controllers
 
         public ActionResult Analytics()
         {
+            var otherIndicatorsOfLife =
+                db.OtherIndicatorsofLife.ToList().Where(x => x.Year == "2017" || x.Year == "2016");
+
+            ViewBag.OtherIndicatorsOfLife = otherIndicatorsOfLife;
 
             var pointsOfInterests = db.PointsOfInterest.ToList();
 

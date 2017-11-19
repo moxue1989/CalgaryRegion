@@ -28,6 +28,9 @@ namespace CalgaryHacks
 
             bundles.Add(new ScriptBundle("~/bundles/gmaps").Include(
                 "~/Scripts/gmaps.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/chart").Include(
+                "~/Scripts/Chart.js"));
         }
     }
 }
