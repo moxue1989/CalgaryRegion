@@ -1,9 +1,36 @@
 ﻿@model  CalgaryHacks.Models.ViewModels.QuadrantModel
 
 @{
-    ViewBag.Title = "title";
+    ViewBag.Title = "Calgary " + Model.Quadrant;
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+
+    var policeCount = Model.PointsOfInterests.Count(x => x.Type == "Police Station");
+    var policeCountPerCapita = Model.Population / policeCount ;
+
+    var fireCount = Model.PointsOfInterests.Count(x => x.Type == "Fire Station");
+    var fireCountPerCapita =  Model.Population/ fireCount ;
+
+
+    var communityCenterCount = Model.PointsOfInterests.Count(x => x.Type == "Community Center");
+    var CommunityCenterCountPerCapita =  Model.Population/ communityCenterCount ;
+
+
+    var libraryCount = Model.PointsOfInterests.Count(x => x.Type == "Library");
+    var libraryCountPerCapita = Model.Population/ libraryCount;
+
+
+    var cTrainCount = Model.PointsOfInterests.Count(x => x.Type == "CTrain");
+    var cTrainCountPerCapita =  Model.Population/ cTrainCount;
+
+    var currentEventsCount = Model.Events.Count();
+    var currentEventsPerCapita =  Model.Population/ currentEventsCount;
+
+    var totalScore = (currentEventsPerCapita + cTrainCountPerCapita + libraryCountPerCapita + CommunityCenterCountPerCapita + fireCountPerCapita + policeCountPerCapita) / 10000; 
+
 }
+
+    
 
 <!DOCTYPE html>
 <html>
@@ -43,7 +70,7 @@
     </style>
 </head>
 <body>
-    <h3>Quadrants</h3>
+    <h3>Calgary @Model.Quadrant</h3>
 
 <ul class="breadcrumb">
     
@@ -57,6 +84,81 @@
 </ul>
 
     <div id="map"></div>
+    
+<div class="container">
+    <h2>Analytics Information</h2>
+    <p>The population in the @Model.Quadrant is:</p>            
+    
+    <!--Population Data-->
+    <table class="table table-striped">
+    <thead>
+    <tr>
+        <th>Population</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+    <td>@Model.Population</td>
+        </tr>
+        </tbody>
+    </table>
+
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Services</th>
+            <th>Amount</th>
+            <th>Aggregate (Population/Service)</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>Police Stations</td>
+            <td>@policeCount</td>
+            <td>@policeCountPerCapita</td>
+        </tr>
+        <tr>
+            <td>Fire Stations</td>
+            <td>@fireCount</td>
+            <td>@fireCountPerCapita</td>
+        </tr>
+        <tr>
+            <td>Recreational/Community Centers</td>
+            <td>@communityCenterCount</td>
+            <td>@CommunityCenterCountPerCapita</td>
+        </tr>
+            
+        <tr>
+            <td>LRT Station</td>
+            <td>@cTrainCount</td>
+            <td>@cTrainCountPerCapita</td>
+        </tr>
+            
+        <tr>
+            <td>Libraries</td>
+            <td>@libraryCount</td>
+            <td>@libraryCountPerCapita</td>
+        </tr>
+            
+            
+        <tr>
+            <td>Current Events</td>
+            <td>@currentEventsCount</td>
+            <td>@currentEventsPerCapita</td>
+        </tr>
+            
+        <tr>
+            <td></td>
+            <td></td>
+           
+            <td><b>Total Score:    </b>@totalScore</td>
+        </tr>
+
+
+        </tbody>
+    </table>
+</div>
 
 <script>
     var map;
@@ -83,6 +185,14 @@
                 url: '../images/PoliceStation.png',
                 scaledSize: iconSize
             },
+            OutdoorPool: {
+                url: '../images/Pool.png',
+                scaledSize: iconSize
+            },
+            Arena: {
+                url: '../images/Arena.png',
+                scaledSize: iconSize
+            },
             FireStation: {
                 url: '../images/FireStation.png',
                 scaledSize: iconSize
@@ -100,7 +210,7 @@
         var infowindow = new google.maps.InfoWindow();
 
 
-        @foreach (var pointOfInterest in Model.PointsOfInterests.Where(x => x.Type == "Police Station" || x.Type == "Fire Station" || x.Type == "Library"))
+        @foreach (var pointOfInterest in Model.PointsOfInterests.Where(x => x.Type == "Police Station" || x.Type == "Arena" || x.Type == "Fire Station" || x.Type == "Library" || x.Type =="CTrain" || x.Type == "Outdoor Pool"))
         {
             <text>
                 var myLatLng = { lat: @pointOfInterest.Latitude, lng: @pointOfInterest.Longitude };
@@ -126,6 +236,37 @@
             </text>
 
         }
+
+
+        //Event Markers
+        @foreach (var eventModel in Model.Events)
+        {
+            <text>
+                var myLatLng = { lat: @eventModel.Latitude, lng: @eventModel.Longitude };
+                var contentPOI = '@eventModel.Name' + ' @eventModel.Type';
+
+
+                var marker = new google.maps.Marker(
+                    {
+                        position: myLatLng,
+                        map: map,
+                   
+                    });
+
+                google.maps.event.addListener(marker,
+                    'click',
+                    (function(marker, contentPOI) {
+                        return function() {
+                            infowindow.setContent(contentPOI);
+                            infowindow.open(map, marker);
+                        }
+                    })(marker, contentPOI));
+
+            </text>
+
+        }
+
+
     }
 </script>
     
