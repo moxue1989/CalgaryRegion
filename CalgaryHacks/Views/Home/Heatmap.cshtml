@@ -1,0 +1,228 @@
+﻿@model CalgaryHacks.Models.ViewModels.HeatMapModel
+
+@{
+    ViewBag.Title = "HeatMap";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h3>Calgary Services Heatmap</h3>
+<style>
+    #map {
+        height: 600px;
+        width: 100%;
+    }
+
+    ul.breadcrumb {
+        padding: 10px 16px;
+        list-style: none;
+        background-color: #eee;
+    }
+
+        ul.breadcrumb li {
+            display: inline;
+            font-size: 18px;
+        }
+
+            ul.breadcrumb li + li:before {
+                padding: 8px;
+                color: black;
+                content: "/\00a0";
+            }
+
+            ul.breadcrumb li a {
+                color: #0275d8;
+                text-decoration: none;
+            }
+
+                ul.breadcrumb li a:hover {
+                    color: #01447e;
+                    text-decoration: underline;
+                }
+</style>
+<ul class="breadcrumb">
+
+
+    <li><a href="@Url.Action("Analytics", "Home")">Calgary</a></li>
+    <li><a href="@Url.Action("Quadrants", "Home", new {quadrant = "NE"})">NE</a></li>
+    <li><a href="@Url.Action("Quadrants", "Home", new {quadrant = "NW"})">NW</a></li>
+    <li><a href="@Url.Action("Quadrants", "Home", new {quadrant = "SW"})">SW</a></li>
+    <li><a href="@Url.Action("Quadrants", "Home", new {quadrant = "SE"})">SE</a></li>
+    <li>HeatMap</li>
+
+</ul>
+<div id="map" style="height:600px;width:100%;"></div>
+<script type='text/javascript'>
+    function initMap() {
+        var position = { lat: 51.0486, lng: -114.0708 };
+        var map = new google.maps.Map(document.getElementById('map'),
+            {
+                center: position,
+                zoom: 12
+            });
+
+        var policeheatmap = new google.maps.visualization.HeatmapLayer({
+            data: getPolicePoints(),
+            map: map
+        });
+
+        var fireheatmap = new google.maps.visualization.HeatmapLayer({
+            data: getFirePoints(),
+            map: map
+        });
+
+        var libraryheatmap = new google.maps.visualization.HeatmapLayer({
+            data: getLibraryPoints(),
+            map: map
+        });
+
+        var communityheatmap = new google.maps.visualization.HeatmapLayer({
+            data: getCommunityPoints(),
+            map: map
+        });
+
+        map.addListener('zoom_changed', function() {
+            policeheatmap.set('radius', (4 * map.getZoom()));
+            fireheatmap.set('radius', (3 * map.getZoom()));
+            libraryheatmap.set('radius', (2 * map.getZoom()));
+            communityheatmap.set('radius', (2 * map.getZoom()));
+        });
+
+        policeheatmap.set('radius', (4 * map.getZoom()));
+        fireheatmap.set('radius', (3 * map.getZoom()));
+        libraryheatmap.set('radius', (2 * map.getZoom()));
+        communityheatmap.set('radius', (2 * map.getZoom()));
+        policeheatmap.set('opacity', 0);
+        fireheatmap.set('opacity', 0);
+        libraryheatmap.set('opacity', 0);
+        communityheatmap.set('opacity', 0);
+
+        $("#toggle-heatmap-police").click(function() {
+            policeheatmap.set('opacity', policeheatmap.get('opacity') > 0 ? 0 : 0.6);
+        });
+        $("#toggle-heatmap-fire").click(function () {
+            fireheatmap.set('opacity', fireheatmap.get('opacity') > 0 ? 0 : 0.6);
+        });
+        $("#toggle-heatmap-library").click(function () {
+            libraryheatmap.set('opacity', libraryheatmap.get('opacity') > 0 ? 0 : 0.6);
+        });
+        $("#toggle-heatmap-community").click(function () {
+            communityheatmap.set('opacity', communityheatmap.get('opacity') > 0 ? 0 : 0.6);
+        });
+
+        var policegradient = [
+            'rgba(0, 255, 255, 0)',
+            'rgba(0, 255, 255, 1)',
+            'rgba(0, 191, 255, 1)',
+            'rgba(0, 127, 255, 1)',
+            'rgba(0, 63, 255, 1)',
+            'rgba(0, 0, 255, 1)',
+            'rgba(0, 0, 223, 1)',
+            'rgba(0, 0, 191, 1)',
+            'rgba(0, 0, 159, 1)',
+            'rgba(0, 0, 127, 1)'
+        ];
+        var firegradient = [
+            'rgba(255, 255, 0, 0)',
+            'rgba(255, 255, 0, 1)',
+            'rgba(255, 191, 0, 1)',
+            'rgba(255, 127, 0, 1)',
+            'rgba(255, 63, 0, 1)',
+            'rgba(255, 0, 0, 1)',
+            'rgba(223, 0, 0, 1)',
+            'rgba(191, 0, 0, 1)',
+            'rgba(159, 0, 0, 1)',
+            'rgba(127, 0, 0, 1)'
+        ];
+        var communitygradient = [
+            'rgba(191, 255, 0, 0)',
+            'rgba(127, 255, 0, 1)',
+            'rgba(63, 255, 0, 1)',
+            'rgba(45, 255, 0, 1)',
+            'rgba(15, 255, 0, 1)',
+            'rgba(0, 255, 0, 1)',
+            'rgba(0, 223, 0, 1)',
+            'rgba(0, 191, 0, 1)',
+            'rgba(0, 159, 0, 1)',
+            'rgba(0, 127, 0, 1)'
+        ];
+        var librarygradient = [
+            'rgba(50,30,5, 0)',
+            'rgba(80,45,10, 0)',
+            'rgba(100,50,20, 1)',
+            'rgba(120,65,40, 1)',
+            'rgba(125, 73, 44, 1)',
+            'rgba(150, 80, 50, 1)',
+            'rgba(165, 82, 53, 1)',
+            'rgba(170, 88, 59, 1)',
+            'rgba(192, 90, 73, 1)',
+            'rgba(206, 100, 85, 1)',
+            'rgba(210, 149, 100, 1)',
+            'rgba(235, 171, 118, 1)'
+        ];
+        fireheatmap.set('gradient', firegradient);
+        policeheatmap.set('gradient', policegradient);
+        libraryheatmap.set('gradient', librarygradient);
+        communityheatmap.set('gradient', communitygradient);
+
+        function getFirePoints() {
+            return [
+                @foreach (var fireStation in Model.FireStations)
+                {
+                    <text>
+                        new google.maps.LatLng(@fireStation.Latitude, @fireStation.Longitude),
+                    </text>
+                }
+                new google.maps.LatLng(51.0486, -114.0708)
+            ];
+        };
+        function getPolicePoints() {
+            return [
+                @foreach (var policeStation in Model.PoliceStations)
+                {
+                    <text>
+                        new google.maps.LatLng(@policeStation.Latitude, @policeStation.Longitude),
+                    </text>
+                }
+                new google.maps.LatLng(51.0486, -114.0708)
+            ];
+        };
+        function getLibraryPoints() {
+            return [
+                @foreach (var library in Model.Libraries)
+                {
+                    <text>
+                        new google.maps.LatLng(@library.Latitude, @library.Longitude),
+                    </text>
+                }
+                new google.maps.LatLng(51.0486, -114.0708)
+            ];
+        };
+        function getCommunityPoints() {
+            return [
+                @foreach (var community in Model.CommunityCenters)
+                {
+                    <text>
+                        new google.maps.LatLng(@community.Latitude, @community.Longitude),
+                    </text>
+                }
+                new google.maps.LatLng(51.0486, -114.0708)
+            ];
+        }
+    }
+</script>
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCLzceSDMiwJrK9rWoEUEaY2BjCo9rfuJI&libraries=visualization&callback=initMap">
+</script>
+<div class="container-fluid">
+    <br/>
+    <div class="row">
+        <div class="col-sm-6 col-md-6 col-lg-6">
+            <button class="btn-danger btn-block btn-lg" id="toggle-heatmap-fire">Toggle Firestation Heatmap</button>
+            <button class="btn-primary btn-block btn-lg" id="toggle-heatmap-police">Toggle Police Heatmap</button>
+        </div>
+        <div class="col-sm-6 col-md-6 col-lg-6">
+            <button class="btn-warning btn-block btn-lg" id="toggle-heatmap-library">Toggle Library Heatmap</button>
+            <button class="btn-success btn-block btn-lg" id="toggle-heatmap-community">Toggle Community Heatmap</button>
+        </div>
+    </div>
+</div>
