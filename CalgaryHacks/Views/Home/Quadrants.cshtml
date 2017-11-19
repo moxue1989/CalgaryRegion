@@ -6,34 +6,33 @@
 
 
     var policeCount = Model.PointsOfInterests.Count(x => x.Type == "Police Station");
-    var policeCountPerCapita = Model.Population / policeCount ;
+    var policeCountPerCapita = Model.Population / policeCount;
 
     var fireCount = Model.PointsOfInterests.Count(x => x.Type == "Fire Station");
-    var fireCountPerCapita =  Model.Population/ fireCount ;
+    var fireCountPerCapita = Model.Population / fireCount;
 
 
     var communityCenterCount = Model.PointsOfInterests.Count(x => x.Type == "Community Center");
-    var CommunityCenterCountPerCapita =  Model.Population/ communityCenterCount ;
+    var CommunityCenterCountPerCapita = Model.Population / communityCenterCount;
 
 
     var libraryCount = Model.PointsOfInterests.Count(x => x.Type == "Library");
-    var libraryCountPerCapita = Model.Population/ libraryCount;
+    var libraryCountPerCapita = Model.Population / libraryCount;
 
 
     var cTrainCount = Model.PointsOfInterests.Count(x => x.Type == "CTrain");
-    var cTrainCountPerCapita =  Model.Population/ cTrainCount;
+    var cTrainCountPerCapita = Model.Population / cTrainCount;
 
     var currentEventsCount = Model.Events.Count();
-    var currentEventsPerCapita =  Model.Population/ currentEventsCount;
+    var currentEventsPerCapita = Model.Population / currentEventsCount;
 
-    var totalScore = (currentEventsPerCapita + cTrainCountPerCapita + libraryCountPerCapita + CommunityCenterCountPerCapita + fireCountPerCapita + policeCountPerCapita) / 10000; 
+    var totalScore = (currentEventsPerCapita + cTrainCountPerCapita + libraryCountPerCapita + CommunityCenterCountPerCapita + fireCountPerCapita + policeCountPerCapita) / 10000;
 
 }
 
-    
+
 
 <!DOCTYPE html>
-<html>
 <head>
     <style>
         #map {
@@ -72,95 +71,96 @@
 <body>
     <h3>Calgary @Model.Quadrant</h3>
 
-<ul class="breadcrumb">
-    
+    <ul class="breadcrumb">
 
-    <li><a href="@Url.Action("Analytics", "Home")">Calgary</a></li>
-    <li><a href="@Url.Action("Quadrants", "Home", new {quadrant = "NE"})">NE</a></li>
-    <li><a href="@Url.Action("Quadrants", "Home", new {quadrant = "NW"})">NW</a></li>
-    <li><a href="@Url.Action("Quadrants", "Home", new {quadrant = "SW"})">SW</a></li>
-    <li><a href="@Url.Action("Quadrants", "Home", new {quadrant = "SE"})">SE</a></li>
 
-</ul>
+        <li><a href="@Url.Action("Analytics", "Home")">Calgary</a></li>
+        <li><a href="@Url.Action("Quadrants", "Home", new {quadrant = "NE"})">NE</a></li>
+        <li><a href="@Url.Action("Quadrants", "Home", new {quadrant = "NW"})">NW</a></li>
+        <li><a href="@Url.Action("Quadrants", "Home", new {quadrant = "SW"})">SW</a></li>
+        <li><a href="@Url.Action("Quadrants", "Home", new {quadrant = "SE"})">SE</a></li>
+        <li><a href="@Url.Action("Heatmap", "Home")">HeatMap</a></li>
+
+    </ul>
 
     <div id="map"></div>
-    
-<div class="container">
-    <h2>Analytics Information</h2>
-    <p>The population in the @Model.Quadrant is:</p>            
-    
-    <!--Population Data-->
-    <table class="table table-striped">
-    <thead>
-    <tr>
-        <th>Population</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-    <td>@Model.Population</td>
-        </tr>
-        </tbody>
-    </table>
+
+    <div class="container">
+        <h2>Analytics Information</h2>
+        <p>The population in the @Model.Quadrant is:</p>
+
+        <!--Population Data-->
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Population</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>@Model.Population</td>
+                </tr>
+            </tbody>
+        </table>
 
 
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th>Services</th>
-            <th>Amount</th>
-            <th>Aggregate (Population/Service)</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td>Police Stations</td>
-            <td>@policeCount</td>
-            <td>@policeCountPerCapita</td>
-        </tr>
-        <tr>
-            <td>Fire Stations</td>
-            <td>@fireCount</td>
-            <td>@fireCountPerCapita</td>
-        </tr>
-        <tr>
-            <td>Recreational/Community Centers</td>
-            <td>@communityCenterCount</td>
-            <td>@CommunityCenterCountPerCapita</td>
-        </tr>
-            
-        <tr>
-            <td>LRT Station</td>
-            <td>@cTrainCount</td>
-            <td>@cTrainCountPerCapita</td>
-        </tr>
-            
-        <tr>
-            <td>Libraries</td>
-            <td>@libraryCount</td>
-            <td>@libraryCountPerCapita</td>
-        </tr>
-            
-            
-        <tr>
-            <td>Current Events</td>
-            <td>@currentEventsCount</td>
-            <td>@currentEventsPerCapita</td>
-        </tr>
-            
-        <tr>
-            <td></td>
-            <td></td>
-           
-            <td><b>Total Score:    </b>@totalScore</td>
-        </tr>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Services</th>
+                    <th>Amount</th>
+                    <th>Aggregate (Population/Service)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Police Stations</td>
+                    <td>@policeCount</td>
+                    <td>@policeCountPerCapita</td>
+                </tr>
+                <tr>
+                    <td>Fire Stations</td>
+                    <td>@fireCount</td>
+                    <td>@fireCountPerCapita</td>
+                </tr>
+                <tr>
+                    <td>Recreational/Community Centers</td>
+                    <td>@communityCenterCount</td>
+                    <td>@CommunityCenterCountPerCapita</td>
+                </tr>
+
+                <tr>
+                    <td>LRT Station</td>
+                    <td>@cTrainCount</td>
+                    <td>@cTrainCountPerCapita</td>
+                </tr>
+
+                <tr>
+                    <td>Libraries</td>
+                    <td>@libraryCount</td>
+                    <td>@libraryCountPerCapita</td>
+                </tr>
 
 
-        </tbody>
-    </table>
-</div>
+                <tr>
+                    <td>Current Events</td>
+                    <td>@currentEventsCount</td>
+                    <td>@currentEventsPerCapita</td>
+                </tr>
 
-<script>
+                <tr>
+                    <td></td>
+                    <td></td>
+
+                    <td><b>Total Score:    </b>@totalScore</td>
+                </tr>
+
+
+            </tbody>
+        </table>
+    </div>
+
+    <script>
     var map;
     var dim = 25;
     var iconSize;
@@ -250,7 +250,7 @@
                     {
                         position: myLatLng,
                         map: map,
-                   
+
                     });
 
                 google.maps.event.addListener(marker,
@@ -268,8 +268,9 @@
 
 
     }
-</script>
-    
-<script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCi84qEblX_oHY4fLUW8pjliIsrXZJs3eI&callback=initMap">
-</script>
+    </script>
+
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCi84qEblX_oHY4fLUW8pjliIsrXZJs3eI&callback=initMap">
+    </script>
+</body>

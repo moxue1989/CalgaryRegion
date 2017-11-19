@@ -1,4 +1,5 @@
-﻿using CalgaryHacks.Apis;
+﻿using System.Collections.Generic;
+using CalgaryHacks.Apis;
 using CalgaryHacks.DatabaseModel;
 using CalgaryHacks.Models;
 using System.Data.Entity;
@@ -17,6 +18,7 @@ namespace CalgaryHacks.Controllers
             eventViewModel.Events = EventCache.GetEventBag();
             return View(eventViewModel);
         }
+
         public ActionResult About()
         {
             return View();
@@ -108,7 +110,7 @@ namespace CalgaryHacks.Controllers
         public ActionResult Chat(int roomId)
         {
 
-            User user = (User)HttpContext.Session["user"];
+            User user = (User) HttpContext.Session["user"];
             if (user == null)
             {
                 return RedirectToAction("Login", "Home");
@@ -123,7 +125,7 @@ namespace CalgaryHacks.Controllers
 
         public ActionResult ChooseChat()
         {
-            User user = (User)HttpContext.Session["user"];
+            User user = (User) HttpContext.Session["user"];
             if (user == null)
             {
                 return RedirectToAction("Login", "Home");
@@ -142,7 +144,7 @@ namespace CalgaryHacks.Controllers
         [HttpPost]
         public ActionResult ChooseChat(int roomId)
         {
-            User user = (User)HttpContext.Session["user"];
+            User user = (User) HttpContext.Session["user"];
             if (user == null)
             {
                 return RedirectToAction("Login", "Home");
@@ -173,8 +175,9 @@ namespace CalgaryHacks.Controllers
             ViewModels.QuadrantModel quadrantModel = new ViewModels.QuadrantModel();
 
             quadrantModel.Events = EventCache.GetEventBag().Where(x => x.Quadrant == quadrant).ToList();
-            quadrantModel.PointsOfInterests = PointsOfInterestCache.GetPointsOfInterestBag().Where(x => x.Location == quadrant).ToList();
-            
+            quadrantModel.PointsOfInterests = PointsOfInterestCache.GetPointsOfInterestBag()
+                .Where(x => x.Location == quadrant).ToList();
+
             switch (quadrant)
             {
                 case "NW":
@@ -209,6 +212,18 @@ namespace CalgaryHacks.Controllers
 
             }
             return View(quadrantModel);
+        }
+
+        public ActionResult Heatmap()
+        {
+            ViewModels.HeatMapModel heatMapModel = new ViewModels.HeatMapModel();
+            List<PointsOfInterest> pointsOfInterests = PointsOfInterestCache.GetPointsOfInterestBag();
+
+            heatMapModel.PoliceStations = pointsOfInterests.Where(x => x.Type == "Police Station").ToList();
+            heatMapModel.FireStations = pointsOfInterests.Where(x => x.Type == "Fire Station").ToList();
+            heatMapModel.Libraries = pointsOfInterests.Where(x => x.Type == "Library").ToList();
+            heatMapModel.CommunityCenters = pointsOfInterests.Where(x => x.Type == "Community Center").ToList();
+            return View(heatMapModel);
         }
     }
 }

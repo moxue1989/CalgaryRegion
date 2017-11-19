@@ -70,5 +70,13 @@ namespace CalgaryHacks.Models
 
             public Event CurrentEvent { get; set; }
         }
+
+        public class HeatMapModel
+        {
+            public List<PointsOfInterest> PoliceStations { get; set; }
+            public List<PointsOfInterest> FireStations { get; set; }
+            public List<PointsOfInterest> Libraries { get; set; }
+            public List<PointsOfInterest> CommunityCenters{ get; set; }
+        }
     }
 }
