@@ -12,13 +12,13 @@ namespace CalgaryHacks.Controllers
         // GET: api/Event
         public IEnumerable<Event> Get()
         {
-            return EventCache.GetEventBag().ToList();
+            return EventCache.GetEventBag();
         }
 
         // GET: api/Event/5
         public Event Get(int id)
         {
-            return EventCache.GetEventBag().ToList().Find(x => x.Id == id);
+            return EventCache.GetEventBag().Find(x => x.Id == id);
         }
 
         // POST: api/Event

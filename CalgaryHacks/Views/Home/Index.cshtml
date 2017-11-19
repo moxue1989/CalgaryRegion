@@ -48,7 +48,7 @@
                     @using (Html.BeginForm("ChooseChat", "Home", FormMethod.Post))
                     {
                         <input type="hidden" id="roomId" name="roomId" />
-                        <button type="submit" class="btn">Join Chat</button>
+                        <button type="submit" class="btn btn-primary">Chat Now</button>
                     }
                 </div>
             </div>
@@ -86,7 +86,7 @@
             <form action="/Home/ChooseChat" method="post">
 
                 <input type="hidden" name="roomId" value="@eventModel.Id" />
-                <button type="submit" class="btn">Chat Now</button>
+                <button type="submit" class="btn btn-primary">Chat Now</button>
             </form>
             <br>
             <br>
@@ -115,7 +115,7 @@
 
                 <form action="/Home/ChooseChat" method="post">
                     <input type="hidden" name="roomId" value="@eventModel.Id" />
-                    <button type="submit" class="btn">Chat Now</button>
+                    <button type="submit" class="btn btn-primary">Chat Now</button>
                 </form>
                 <br>
                 <br>

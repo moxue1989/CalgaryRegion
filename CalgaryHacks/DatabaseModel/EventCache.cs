@@ -27,7 +27,7 @@ namespace CalgaryHacks.DatabaseModel
             }
         }
 
-        public static ConcurrentBag<Event> GetEventBag()
+        public static List<Event> GetEventBag()
         {
             if ((DateTime.Now - _lastUpdateTime).Minutes > UpdateTimeInMinutes)
             {
@@ -40,7 +40,7 @@ namespace CalgaryHacks.DatabaseModel
                 UpdateEventsFromDb();
 
             }
-            return _eventBag;
+            return _eventBag.ToList();
         }
     }
 }
