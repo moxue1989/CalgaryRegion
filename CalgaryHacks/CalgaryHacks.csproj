@@ -252,9 +252,12 @@
     <Content Include="Content\Site.css" />
     <Content Include="images\CommunityCentre.png" />
     <Content Include="images\FireStation.png" />
+    <Content Include="images\Arena.png" />
+    <Content Include="images\Pool.png" />
     <Content Include="images\LRTStation.png" />
     <Content Include="images\PoliceStation.png" />
     <Content Include="images\PublicLibrary.png" />
+    <Content Include="images\Recreational.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">

@@ -191,20 +191,29 @@ namespace CalgaryHacks.Controllers
                 case "NW":
                     quadrantModel.Lat = "51.0750527";
                     quadrantModel.Lng = "-114.1194289";
+                    quadrantModel.Quadrant = "NW";
+                    quadrantModel.Population = 330000L;
+                    ;
                     break;
                 case "NE":
 
                     quadrantModel.Lat = "51.0865101";
                     quadrantModel.Lng = "-113.967823";
+                    quadrantModel.Quadrant = "NE";
+                    quadrantModel.Population = 265000L;
                     break;
                 case "SW":
                     quadrantModel.Lat = "51.0213185";
                     quadrantModel.Lng = "-114.1023589";
+                    quadrantModel.Quadrant = "SW";
+                    quadrantModel.Population = 280000L;
 
                     break;
                 case "SE":
                     quadrantModel.Lat = "51.011528";
                     quadrantModel.Lng = "-113.9891212";
+                    quadrantModel.Quadrant = "SE";
+                    quadrantModel.Population = 355000L;
                     break;
                 default:
                     break;

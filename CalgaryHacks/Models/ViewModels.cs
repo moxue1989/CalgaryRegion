@@ -29,6 +29,10 @@ namespace CalgaryHacks.Models
             public string Lat { get; set; }
 
             public string Lng { get; set; }
+
+            public string Quadrant { get; set; }
+
+            public long Population { get; set; }
         }
 
         public class LoginModel
