@@ -11,19 +11,17 @@
     <div class="navbar navbar-default navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse" >
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
                 @Html.ActionLink("Calgary Events", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
-            <div class="navbar-collapse collapse">
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                        <li>@Html.ActionLink("Chat", "ChooseChat", "Home")</li>
-                        <li>@Html.ActionLink("Analytics", "Analytics", "Home")</li>
+                        <li>@Html.ActionLink("Explore", "Index", "Home")</li>
+                        <!--<li>@Html.ActionLink("Chat", "ChooseChat", "Home")</li>-->
                     </ul>
 
                     <ul class="nav navbar-nav navbar-right">
@@ -34,13 +32,13 @@
                         }
                         else
                         {
+                            <li>@Html.ActionLink("My Chats", "ChooseChat", "Home")</li>
                             <li>@Html.ActionLink("Logout", "Logout", "Home")</li>
                         }
                     </ul>
                 </div>
             </div>
         </div>
-    </div>
     <div class="container body-content">
         @RenderBody()
         <hr />

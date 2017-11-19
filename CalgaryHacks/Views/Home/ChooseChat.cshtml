@@ -4,7 +4,7 @@
     ViewBag.Title = "ChooseChat";
 }
 <h2>
-    <th>Your Current Events:</th>
+    Your Current Events:
 </h2>
 
 @foreach (var eventChat in Model.EventChats)
@@ -16,7 +16,7 @@
         <h5><span class="label label-danger">Sporting</span> <span class="label label-primary">Entertainment</span></h5>
         <br>
         <p> Description:@Html.Raw(eventDescription)</p>
-        <p>More Information: <a href="@eventChat.URL"> Buy tickets Now!</a></p>
+        <a href="@eventChat.URL">Click here for more information</a>
 
         <form action="/Home/ChooseChat" method="post">
             <input type="hidden" name="roomId" value="@eventChat.Id" />
