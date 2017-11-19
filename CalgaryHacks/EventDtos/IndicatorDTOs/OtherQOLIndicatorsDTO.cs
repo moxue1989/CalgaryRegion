@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 
 namespace CalgaryHacks.EventDtos.IndicatorDTOs
 {
-    public partial class OtherQOLIndicators
+    public partial class OtherQOLIndicatorsDTO
     {
         [JsonProperty("access_to_daily_needs_and_services")]
         public string AccessToDailyNeedsAndServices { get; set; }
@@ -39,9 +39,9 @@ namespace CalgaryHacks.EventDtos.IndicatorDTOs
         public string Year { get; set; }
     }
 
-    public partial class OtherQOLIndicators
+    public partial class OtherQOLIndicatorsDTO
     {
-        public static List<OtherQOLIndicators> FromJson(string json) => JsonConvert.DeserializeObject<List<OtherQOLIndicators>>(json, Converter.Settings);
+        public static List<OtherQOLIndicatorsDTO> FromJson(string json) => JsonConvert.DeserializeObject<List<OtherQOLIndicatorsDTO>>(json, Converter.Settings);
     }
 
 
