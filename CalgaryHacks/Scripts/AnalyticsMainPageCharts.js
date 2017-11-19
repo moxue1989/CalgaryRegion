@@ -27,6 +27,12 @@ var MeSeChart = new Chart(CommunityBelonging, {
             yAxes: [{
                 stacked: true
             }]
+        }, title: {
+            display: true,
+            text: 'Community Belonging (%)'
+        },
+        legend: {
+            display: false,
         }
 
     }
@@ -41,7 +47,7 @@ var MeSeData = {
     ],
     datasets: [
         {
-            label: "Daily Needs And Services",
+            //label: "Daily Needs And Services",
             data: [22, 19],
             backgroundColor: ["#66A2EB", "#66A2EB" ],
             hoverBackgroundColor: ["#FCCE56", "#FCCE56"]
@@ -61,8 +67,14 @@ var MeSeChart = new Chart(DailyNeedsAndServices, {
             yAxes: [{
                 stacked: true
             }]
+        },
+        title: {
+            display: true,
+            text: 'Daily Needs (%)'
+        },
+        legend: {
+            display: false,
         }
-
     }
 });
 
@@ -76,7 +88,7 @@ var MeSeData = {
     ],
     datasets: [
         {
-            label: "Active Adults",
+            //label: "Active Adults",
             data: [57, 63],
             backgroundColor: ["#66A2EB", "#66A2EB"],
             hoverBackgroundColor: ["#FCCE56", "#FCCE56"]
@@ -100,9 +112,11 @@ var activeAdultsChart = new Chart(activeAdults, {
         },
         title: {
             display: true,
-            text: 'Active Adults'
+            text: 'Active Adults (%)'
+        },
+        legend: {
+            display: false,
         }
-
     }
 });
 
@@ -137,7 +151,13 @@ var activeAdultsChart = new Chart(accessibilityTransit, {
             yAxes: [{
                 stacked: true
             }]
+        }, title: {
+            display: true,
+            text: 'Daily Needs (%)'
+        }, legend: {
+            display: false,
         }
+
 
     }
 });
