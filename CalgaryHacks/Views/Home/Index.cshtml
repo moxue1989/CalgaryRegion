@@ -22,8 +22,9 @@
 
 
 
-
-<div class="container-fluid bg-grey " style="padding-top: 5em;">
+<h2>Explore Calgary</h2>
+<p>Discover different events and activities around the city and meet like-minded individuals by clicking on a marker below:</p>
+<div class="container-fluid bg-grey" style="padding-top: 1em;">
     <div class="row">
         <!--Here is the map -->
         <!--Column 1-->
@@ -44,12 +45,11 @@
                 </div>
 
                 <div class="panel-footer">
-                    <p class="url">More Information:</p>
-                    <h4>Join us!</h4>
+                    <p class="url">Click here for more information</p>
                     @using (Html.BeginForm("ChooseChat", "Home", FormMethod.Post))
                     {
                         <input type="hidden" id="roomId" name="roomId" />
-                        <button type="submit" class="btn">Chat Now! </button>
+                        <button type="submit" class="btn">Join Chat</button>
                     }
                 </div>
             </div>
@@ -84,12 +84,12 @@
                 <h5><span class="label label-danger">Sporting</span> <span class="label label-primary">Entertainment</span></h5>
                 <br>
                 <p> Description:@Html.Raw(eventDescription)</p>
-                <p>More Information: <a href="@eventModel.URL"> Buy tickets Now!</a></p>
+                <a href="@eventModel.URL"> Click here for more information</a>
 
                 <form action="/Home/ChooseChat" method="post">
 
                     <input type="hidden" name="roomId" value="@eventModel.Id" />
-                    <button type="submit" class="btn">Chat Now</button>
+                    <button type="submit" class="btn">Join Chat</button>
                 </form>
                 <br>
                 <br>
@@ -113,7 +113,7 @@
             <h5><span class="label label-danger">Sporting</span> <span class="label label-primary">Entertainment</span></h5>
                 <br>
                 <p> Description:@Html.Raw(eventDescription)</p>
-                <p>More Information: <a href="@eventModel.URL"> Buy tickets Now!</a></p>
+                <a href="@eventModel.URL">Click here for more information</a>
 
                 <form action="/Home/ChooseChat" method="post">
                     <input type="hidden" name="roomId" value="@eventModel.Id" />
@@ -142,8 +142,8 @@
     $(document).ready(function () {
         map = new GMaps({
             div: '#map',
-            lat: 51.044270,
-            lng: -114.062019,
+            lat: 51.044308,
+            lng: -114.0652801,
             width: '38.5em',
             height: '500px',
             zoom: 14
