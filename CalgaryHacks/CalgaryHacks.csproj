@@ -179,6 +179,7 @@
     <Compile Include="Apis\EventsApi.cs" />
     <Compile Include="Apis\GoogleMaps.cs" />
     <Compile Include="Apis\IndicatorsOfLifeApi.cs" />
+    <Compile Include="Apis\IndicatorsOfLifeMapper.cs" />
     <Compile Include="Apis\MeetupGroupsToSig.cs" />
     <Compile Include="Apis\PointsOfInterestsApi.cs" />
     <Compile Include="Apis\PointsOfInterestsMapper.cs" />
@@ -197,11 +198,12 @@
     <Compile Include="DatabaseModel\Event.cs" />
     <Compile Include="DatabaseModel\EventCache.cs" />
     <Compile Include="DatabaseModel\Location.cs" />
+    <Compile Include="DatabaseModel\OtherIndicatorsOfLife.cs" />
     <Compile Include="DatabaseModel\PointsOfInterest.cs" />
     <Compile Include="DatabaseModel\User.cs" />
     <Compile Include="EventDtos\EventfulDTO.cs" />
     <Compile Include="EventDtos\GoogleLocations.cs" />
-    <Compile Include="EventDtos\IndicatorDTOs\OtherQOLIndicators.cs" />
+    <Compile Include="EventDtos\IndicatorDTOs\OtherQOLIndicatorsDTO.cs" />
     <Compile Include="EventDtos\LocationDTOs\PoliceServiceOfficesDTO.cs" />
     <Compile Include="EventDtos\MeetupEventsDTO.cs" />
     <Compile Include="EventDtos\Serialize.cs" />
@@ -229,6 +231,14 @@
     <Compile Include="Migrations\201711181745300_event-quadrant.Designer.cs">
       <DependentUpon>201711181745300_event-quadrant.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201711190035070_OtherIndicatorsofLifeTable.cs" />
+    <Compile Include="Migrations\201711190035070_OtherIndicatorsofLifeTable.Designer.cs">
+      <DependentUpon>201711190035070_OtherIndicatorsofLifeTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201711190052255_otherindicatorOfInterestPropertyAccessibility.cs" />
+    <Compile Include="Migrations\201711190052255_otherindicatorOfInterestPropertyAccessibility.Designer.cs">
+      <DependentUpon>201711190052255_otherindicatorOfInterestPropertyAccessibility.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -251,6 +261,8 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="Properties\PublishProfiles\CalgaryRegion - Web Deploy.pubxml" />
+    <Content Include="Scripts\Chart.js" />
+    <Content Include="Scripts\Chart.min.js" />
     <Content Include="Scripts\gmaps.min.js.map" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\gmaps.js" />
@@ -309,6 +321,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201711181745300_event-quadrant.resx">
       <DependentUpon>201711181745300_event-quadrant.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711190035070_OtherIndicatorsofLifeTable.resx">
+      <DependentUpon>201711190035070_OtherIndicatorsofLifeTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711190052255_otherindicatorOfInterestPropertyAccessibility.resx">
+      <DependentUpon>201711190052255_otherindicatorOfInterestPropertyAccessibility.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

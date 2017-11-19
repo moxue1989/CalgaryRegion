@@ -13,6 +13,7 @@ namespace CalgaryHacks.DatabaseModel
         public virtual DbSet<Location> Locations { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<PointsOfInterest> PointsOfInterest { get; set; }
+        public virtual DbSet<OtherIndicatorsOfLife> OtherIndicatorsofLife { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

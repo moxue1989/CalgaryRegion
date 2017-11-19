@@ -64,5 +64,30 @@ namespace CalgaryHacks.Apis
         }
 
 
+        public static List<OtherQOLIndicatorsDTO> GetOtherQualityDtos()
+        {
+            HttpClient client = GetNewClient();
+
+            string url = "https://data.calgary.ca/resource/s3gh-kxsv.json";
+
+            client.BaseAddress = new Uri(url);
+
+            //Configuring Data.Calgary
+            ServicePointManager.SecurityProtocol = ServicePointManager.SecurityProtocol | SecurityProtocolType.Tls11 |
+                                                   SecurityProtocolType.Tls12;
+
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            HttpResponseMessage response = client.GetAsync("").Result;
+
+            var otherQOLIndicatorString = response.Content.ReadAsStringAsync().Result;
+
+            var otherIndicatorDto = OtherQOLIndicatorsDTO.FromJson(otherQOLIndicatorString);
+
+            return otherIndicatorDto;
+
+        }
+
+
     }
 }
