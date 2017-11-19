@@ -1,4 +1,5 @@
-﻿@using CalgaryHacks.EventDtos
+﻿@using CalgaryHacks.DatabaseModel
+@using CalgaryHacks.EventDtos
 @model List<CalgaryHacks.DatabaseModel.PointsOfInterest>
 
 @{
@@ -61,20 +62,38 @@
                 center: calgaryMap
             });
 
+        var infowindow = new google.maps.InfoWindow();
+
+        
             @foreach (var pointOfInterest in Model.Where(x => x.Type == "Police Station" || x.Type == "Fire Station" || x.Type == "Library" ))
             {
              <text>
                  var myLatLng = { lat: @pointOfInterest.Latitude, lng: @pointOfInterest.Longitude };
+                 var contentPOI = '@pointOfInterest.Name' + ' @pointOfInterest.Type';
 
+           
             var marker = new google.maps.Marker(
                 {
                 position: myLatLng,
                 map: map,
                 icon: icons.@Html.Raw(@pointOfInterest.Type.Replace(" ",""))
-                });
+                     });
 
+                 google.maps.event.addListener(marker,
+                     'click',
+                     (function(marker, contentPOI) {
+                         return function() {
+                             infowindow.setContent(contentPOI);
+                             infowindow.open(map, marker);
+                         }
+                     })(marker,contentPOI));
+               
              </text>
+
+
+
              }
+      
 
 
         //NOTE: This it in LONG/LAT AND NOT LAT LONG
@@ -206,19 +225,19 @@
         calgaryNE.setMap(map);
 
         //working on the info window here
-        var contentString = "<p>Hello Calgary NE</p>";
-
-        infoWindowCalgaryNE = new google.maps.InfoWindow({
-            content: contentString
-
-        });
-
-        calgaryNE.addListener('click', function (evt) {
-
-            infoWindowCalgaryNE.setPosition(evt.latLng);
-            infoWindowCalgaryNE.open(map);
-
-        });
+//        var contentString = "<p>Hello Calgary NE</p>";
+//
+//        infoWindowCalgaryNE = new google.maps.InfoWindow({
+//            content: contentString
+//
+//        });
+//
+//        calgaryNE.addListener('click', function (evt) {
+//
+//            infoWindowCalgaryNE.setPosition(evt.latLng);
+//            infoWindowCalgaryNE.open(map);
+//
+//        });
 
         ////////////////////////////////////////////////////////////////////////////////END OF THE CALGARY NE SECTION OF THE MAP///////////////////////////////////////////////////////////////////
 
@@ -428,19 +447,19 @@
         calgarySW.setMap(map);
 
         //working on the info window here
-        var contentString = "<p>Hello Calgary SW</p>";
-
-        infoWindowCalgarySW = new google.maps.InfoWindow({
-            content: contentString
-
-        });
-
-        calgarySW.addListener('click', function (evt) {
-
-            infoWindowCalgarySW.setPosition(evt.latLng);
-            infoWindowCalgarySW.open(map);
-
-        });
+//        var contentString = "<p>Hello Calgary SW</p>";
+//
+//        infoWindowCalgarySW = new google.maps.InfoWindow({
+//            content: contentString
+//
+//        });
+//
+//        calgarySW.addListener('click', function (evt) {
+//
+//            infoWindowCalgarySW.setPosition(evt.latLng);
+//            infoWindowCalgarySW.open(map);
+//
+//        });
 
         /////////////////////////////////////////////////////////////////////////////////////////END OF CALGARY SW SECTION//////////////////////////////////////////////////////////////////////////////////
 
@@ -1154,19 +1173,19 @@
         calgarySE.setMap(map);
 
         //working on the info window here
-        var contentString = "<p>Hello Calgary SE</p>";
-
-        infoWindowCalgarySE = new google.maps.InfoWindow({
-            content: contentString
-
-        });
-
-        calgarySE.addListener('click', function (evt) {
-
-            infoWindowCalgarySE.setPosition(evt.latLng);
-            infoWindowCalgarySE.open(map);
-
-        });
+//        var contentString = "<p>Hello Calgary SE</p>";
+//
+//        infoWindowCalgarySE = new google.maps.InfoWindow({
+//            content: contentString
+//
+//        });
+//
+//        calgarySE.addListener('click', function (evt) {
+//
+//            infoWindowCalgarySE.setPosition(evt.latLng);
+//            infoWindowCalgarySE.open(map);
+//
+//        });
 
         ///////////////////////////////////////////////////////////////////ENDING OF THE CALGARY SE SECTION///////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -1495,20 +1514,20 @@
 
         calgaryNW.setMap(map);
 
-        //working on the info window here
-        var contentString = "<p>Hello Calgary NW</p>";
-
-        infoWindowCalgaryNW = new google.maps.InfoWindow({
-            content: contentString
-
-        });
-
-        calgaryNW.addListener('click', function (evt) {
-
-            infoWindowCalgaryNW.setPosition(evt.latLng);
-            infoWindowCalgaryNW.open(map);
-
-        });
+//        //working on the info window here
+//        var contentString = "<p>Hello Calgary NW</p>";
+//
+//        infoWindowCalgaryNW = new google.maps.InfoWindow({
+//            content: contentString
+//
+//        });
+//
+//        calgaryNW.addListener('click', function (evt) {
+//
+//            infoWindowCalgaryNW.setPosition(evt.latLng);
+//            infoWindowCalgaryNW.open(map);
+//
+//        });
 
         ///////////////////////////////////////////////////////////////////////END OF THE CALGARY NW SECTION////////////////////////////////////////////////////////////////////////////
 
