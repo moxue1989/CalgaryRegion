@@ -19,7 +19,7 @@ namespace CalgaryHacks.Controllers
         public ActionResult Index()
         {
             ViewModels.EventViewModel eventViewModel = new ViewModels.EventViewModel();
-            eventViewModel.Events = EventCache.GetEventBag().ToList();
+            eventViewModel.Events = EventCache.GetEventBag();
             return View(eventViewModel);
         }
         public ActionResult About()
@@ -168,12 +168,7 @@ namespace CalgaryHacks.Controllers
 
         public ActionResult Analytics()
         {
-            var otherIndicatorsOfLife =
-                db.OtherIndicatorsofLife.ToList().Where(x => x.Year == "2017" || x.Year == "2016");
-
-            ViewBag.OtherIndicatorsOfLife = otherIndicatorsOfLife;
-
-            var pointsOfInterests = db.PointsOfInterest.ToList();
+            var pointsOfInterests = PointsOfInterestCache.GetPointsOfInterestBag().ToList();
 
             return View(pointsOfInterests);
         }
@@ -183,7 +178,7 @@ namespace CalgaryHacks.Controllers
             ViewModels.QuadrantModel quadrantModel = new ViewModels.QuadrantModel();
 
             quadrantModel.Events = EventCache.GetEventBag().Where(x => x.Quadrant == quadrant).ToList();
-            quadrantModel.PointsOfInterests = db.PointsOfInterest.Where(x => x.Location == quadrant).ToList();
+            quadrantModel.PointsOfInterests = PointsOfInterestCache.GetPointsOfInterestBag().Where(x => x.Location == quadrant).ToList();
 
           
             switch (quadrant)

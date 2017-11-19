@@ -200,6 +200,7 @@
     <Compile Include="DatabaseModel\Location.cs" />
     <Compile Include="DatabaseModel\OtherIndicatorsOfLife.cs" />
     <Compile Include="DatabaseModel\PointsOfInterest.cs" />
+    <Compile Include="DatabaseModel\PointsOfInterestCache.cs" />
     <Compile Include="DatabaseModel\User.cs" />
     <Compile Include="EventDtos\EventfulDTO.cs" />
     <Compile Include="EventDtos\GoogleLocations.cs" />
