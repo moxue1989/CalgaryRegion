@@ -25,9 +25,6 @@ namespace CalgaryHacks.DatabaseModel
         [JsonIgnore]
         public virtual ICollection<Event> Events { get; set; }
 
-        [NotMapped]
-        public string CurrentRoomId { get; set; }
-
         [JsonProperty("Password")]
         [NotMapped]
         public string PasswordSetter

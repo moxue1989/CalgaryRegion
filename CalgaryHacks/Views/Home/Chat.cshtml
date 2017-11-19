@@ -5,13 +5,13 @@
 }
 <input type="hidden" id="displayname" value="@Model.Name" />
 <input type="hidden" id="userid" value="@Model.Id" />
-<input type="hidden" id="currentRoom" value="@Model.CurrentRoomId" />
-<h4 id="chatRoomName">Chat</h4>
+<input type="hidden" id="currentRoom" value="@ViewBag.roomId" />
+<h4 id="chatRoomName">@ViewBag.roomName</h4>
 
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-3">
-            <div style="background-color: lightgray; border:solid;">
+            <div style="background-color: lightgray; border:hidden; border-radius:5px; border-color:lightgray">
                 <strong>Current Users:</strong>
                 <div readonly id="users">
                 </div>
@@ -21,7 +21,7 @@
             </div>
         </div>
         <div class="col-sm-9">
-            <div style="border:solid;">
+            <div style="border:solid; border-radius:5px; border-color:lightgray">
                 <div id="chatbox" style="height: 300px; overflow: auto; word-wrap: break-word">
                     <span id="discussion"></span>
                     <br />
@@ -71,6 +71,7 @@
             };
 
             chat.client.displayAllUsers = function (users) {
+                $('#users').html("");
                 for (var i = 0; i < users.length; i++) {
                     $('#users').append(users[i] + "<br/>");
                 }
@@ -99,17 +100,5 @@
             var encodedValue = $('<div />').text(value).html();
             return encodedValue;
         }
-    </script>
-    <script>
-        $.ajax({
-            url: '/api/Event/' + $('#currentRoom').val(),
-            type: 'GET',
-            success: function (data) {
-                if (data) {
-                    console.log(data);
-                    $('#chatRoomName').text(data.Name);
-                }
-            }
-        });
     </script>
 }

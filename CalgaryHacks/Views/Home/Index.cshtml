@@ -22,6 +22,7 @@
 
 
 
+
 <div class="container-fluid bg-grey " style="padding-top: 5em;">
     <div class="row">
         <!--Here is the map -->
@@ -36,7 +37,7 @@
                     <h3 class="event"></h3>
                 </div>
                 <div class="panel-body">
-                    <p class="fadein">Temperature:<strong id="temperature"></strong></p>
+                    <p class="fadein">Temperature: <strong id="temperature"></strong></p>
                     <p class="address">Address:</p>
                     <p class="eventDate">Date:</p>
                     <p class="description">Description:</p>
@@ -67,60 +68,62 @@
     var todaysEvents = Model.Events.Where(x => x.EventDate >= todaysDate && x.EventDate <= tomorrowsDate).ToList();
     var tomorrowsEvents = Model.Events.Where(x => x.EventDate >= tomorrowsDate && x.EventDate <= endOfTomorrowsDate).ToList();
 }
+<div class="container-fluid">
+    <!--Today's Events -->
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <h3><small>EVENTS HAPPENING TODAY <span class="badge">@todaysEvents.Count()</span></small></h3>
+        <hr>
+        @foreach (var eventModel in todaysEvents)
+        {
+            var eventDescription = eventModel.Description ?? "No Description Available";
 
-<!--Today's Events -->
-<div class="col-sm-12 col-md-12 col-lg-12">
-    <h3><small>EVENTS HAPPENING TODAY <span class="badge">@todaysEvents.Count()</span></small></h3>
-    <hr>
-    @foreach (var eventModel in todaysEvents)
-    {
-        var eventDescription = eventModel.Description ?? "No Description Available";
-
-        <h3>@eventModel.Name</h3>
-        <h5><span class="glyphicon glyphicon-time"></span>@String.Format("{0:f}", eventModel.EventDate) , @eventModel.Address</h5>
-        <h5><span class="label label-danger">Sporting</span> <span class="label label-primary">Entertainment</span></h5>
+            <h3>@eventModel.Name</h3>
+            <h5><span class="glyphicon glyphicon-time"></span> @String.Format("{0:f}", eventModel.EventDate) , @eventModel.Address</h5>
+            <h5><span class="label label-danger">Sporting</span> <span class="label label-primary">Entertainment</span></h5>
             <br>
             <p> Description:@Html.Raw(eventDescription)</p>
             <p>More Information: <a href="@eventModel.URL"> Buy tickets Now!</a></p>
 
-        Html.BeginForm("ChooseChat", "Home", FormMethod.Post);
-        {
-            <input type="hidden" name="roomId" value="@eventModel.Id" />
-            <button type="submit" class="btn">Chat Now</button>
+            <form action="/Home/ChooseChat" method="post">
+
+                <input type="hidden" name="roomId" value="@eventModel.Id" />
+                <button type="submit" class="btn">Chat Now</button>
+            </form>
+            <br>
+            <br>
+
+
         }
-        <br>
-        <br>
-
-
-    }
+    </div>
 </div>
 <!--End of Todays Events-->
 <!--Tomorrow's Events-->
-<div class="col-sm-12 col-md-12 col-lg-12">
-    <h3 class="displayEvents" style="cursor:pointer"><small>EVENTS HAPPENING TOMMOROW <span class="badge">@tomorrowsEvents.Count()</span></small></h3>
-    <div class="eventsToggle" style="display: none">
-        <hr>
-        @foreach (var eventModel in tomorrowsEvents)
+<div class="container-fluid">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <h3 class="displayEvents" style="cursor:pointer"><small>EVENTS HAPPENING TOMMOROW <span class="badge">@tomorrowsEvents.Count()</span></small></h3>
+        <div class="eventsToggle" style="display: none">
+            <hr>
+            @foreach (var eventModel in tomorrowsEvents)
             {
                 var eventDescription = eventModel.Description ?? "No Description Available";
 
-            <h3>@eventModel.Name</h3>
-            <h5><span class="glyphicon glyphicon-time"></span>@String.Format("{0:f}", eventModel.EventDate) , @eventModel.Address</h5>
-            <h5><span class="label label-danger">Sporting</span> <span class="label label-primary">Entertainment</span></h5>
+                <h3>@eventModel.Name</h3>
+                <h5><span class="glyphicon glyphicon-time"></span>@String.Format("{0:f}", eventModel.EventDate) , @eventModel.Address</h5>
+                <h5><span class="label label-danger">Sporting</span> <span class="label label-primary">Entertainment</span></h5>
                 <br>
                 <p> Description:@Html.Raw(eventDescription)</p>
                 <p>More Information: <a href="@eventModel.URL"> Buy tickets Now!</a></p>
 
-            Html.BeginForm("ChooseChat", "Home", FormMethod.Post);
-            {
-                <input type="hidden" name="roomId" value="@eventModel.Id" />
-                <button type="submit" class="btn">Chat Now</button>
+                <form action="/Home/ChooseChat" method="post">
+                    <input type="hidden" name="roomId" value="@eventModel.Id" />
+                    <button type="submit" class="btn">Chat Now</button>
+                </form>
+                <br>
+                <br>
+
+
             }
-            <br>
-            <br>
-
-
-        }
+        </div>
     </div>
 </div>
 <!--End of Tomorrow's Events-->
@@ -142,7 +145,8 @@
             lat: 51.044270,
             lng: -114.062019,
             width: '38.5em',
-            height: '500px'
+            height: '500px',
+            zoom: 14
         });
         //width 650px height 500px
         //Variables for longitude and latitude to grab the WEATHER
@@ -208,8 +212,10 @@
         $("#eventMarker").hide();
 
         $(".displayEvents").click(function () {
-            $(".eventsToggle").toggle(2000);
+            $(".eventsToggle").toggle(1000);
         });
+
+
 
 
     });//end of document ready
@@ -238,20 +244,16 @@
                         event.appendTo(".event");
                         $('#roomId').val("@eventModel.Id");
 
-                        $(".description").empty();
-                        var description = $("<p>").html("Description: @Html.Raw(eventModel.Description)");
-                        description.appendTo(".description");
-
                         $(".address").empty();
                         var address = $("<p>").html("Address: @eventModel.Address");
                         address.appendTo(".address");
 
                         $(".url").empty();
-                        var url = $("<p>").html("URL:<a href='@eventModel.URL'>Click here for more Information!");
+                        var url = $("<p>").html("<a href='@eventModel.URL'>Click here for more Information");
                         url.appendTo(".url");
 
                         $(".eventDate").empty();
-                        var url = $("<p>").html("Date:@eventModel.EventDate");
+                        var url = $("<p>").html("Date: @eventModel.EventDate");
                         url.appendTo(".eventDate");
 
                     }

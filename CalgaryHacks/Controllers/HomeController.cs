@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
@@ -15,11 +16,6 @@ namespace CalgaryHacks.Controllers
 
         public ActionResult Index()
         {
-            //            var events = EventsApi.GetEventfulEvents();
-            //            var trumba = EventsApi.GetTrumbaEvents();
-            //            var ticketMaster = EventsApi.GetTicketMasterEvents();
-
-//                        EventsApi.UpdateEvents();
             ViewModels.EventViewModel eventViewModel = new ViewModels.EventViewModel();
             eventViewModel.Events = EventCache.GetEventBag().ToList();
             return View(eventViewModel);
@@ -70,7 +66,7 @@ namespace CalgaryHacks.Controllers
                     "Welcome to Calgary chat,\n " +
                     "We hope you have a good time with all the different events, feel free to hop into any of the chatrooms to begin the conversion with your peers.\n\n" +
                     "Regards,\n" + "Calgary Events Team");
-                return RedirectToAction("Chat", "Home");
+                return RedirectToAction("ChooseChat", "Home");
             }
             return View();
         }
@@ -93,9 +89,14 @@ namespace CalgaryHacks.Controllers
             if (ModelState.IsValid)
             {
                 User user = db.Users.FirstOrDefault(a => a.Email == login.Email && a.Password == login.Password);
+
                 if (user != null)
                 {
                     HttpContext.Session["user"] = user;
+                    if (user.Events.Count != 0)
+                    {
+                        return RedirectToAction("ChooseChat", "Home");
+                    }
                     return RedirectToAction("Index", "Home");
                 }
                 ViewBag.Message = "Incorrect Email/Password";
@@ -103,17 +104,16 @@ namespace CalgaryHacks.Controllers
             return View();
         }
 
-        public ActionResult Chat()
+        public ActionResult Chat(int roomId)
         {
+
             User user = (User)HttpContext.Session["user"];
             if (user == null)
             {
                 return RedirectToAction("Login", "Home");
             }
-            if (user.CurrentRoomId == null)
-            {
-                return RedirectToAction("ChooseChat", "Home");
-            }
+            ViewBag.roomId = roomId;
+            ViewBag.roomName = EventCache.GetEventBag().FirstOrDefault(x => x.Id == roomId)?.Name;
             return View(user);
         }
 
@@ -125,24 +125,28 @@ namespace CalgaryHacks.Controllers
                 return RedirectToAction("Login", "Home");
             }
             ViewModels.ChooseChatModel chooseChatModel = new ViewModels.ChooseChatModel();
-            chooseChatModel.EventChats = EventCache.GetEventBag().ToList();
+            User userModel = db.Users.Find(user.Id);
 
+            if (userModel?.Events == null || userModel.Events.Count == 0)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            chooseChatModel.EventChats = userModel.Events;
             return View(chooseChatModel);
         }
 
         [HttpPost]
-        public ActionResult ChooseChat(String roomId)
+        public ActionResult ChooseChat(int roomId)
         {
             User user = (User)HttpContext.Session["user"];
             if (user == null)
             {
                 return RedirectToAction("Login", "Home");
             }
-            user.CurrentRoomId = roomId;
             HttpContext.Session["user"] = user;
 
             User dbUser = db.Users.Find(user.Id);
-            Event eventObject = db.Events.Find(Int32.Parse(roomId));
+            Event eventObject = db.Events.Find(roomId);
             if (dbUser != null && eventObject != null)
             {
                 dbUser.Events.Add(eventObject);
@@ -150,7 +154,7 @@ namespace CalgaryHacks.Controllers
                 db.SaveChanges();
             }
 
-            return RedirectToAction("Chat", "Home");
+            return RedirectToAction("Chat", "Home", new {roomId});
         }
 
         public ActionResult Analytics()
