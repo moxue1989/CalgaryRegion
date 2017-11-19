@@ -9,7 +9,7 @@ namespace CalgaryHacks.DatabaseModel
 {
     public static class EventCache
     {
-        private const int UpdateTimeInMinutes = 20;
+        private const int UpdateTimeInMinutes = 30;
         private static readonly DataModel Db = new DataModel();
         private static ConcurrentBag<Event> _eventBag = new ConcurrentBag<Event>();
         private static DateTime _lastUpdateTime = DateTime.Now;

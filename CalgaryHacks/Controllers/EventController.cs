@@ -7,7 +7,7 @@ namespace CalgaryHacks.Controllers
 {
     public class EventController : ApiController
     {
-        DataModel db = new DataModel();
+//        DataModel db = new DataModel();
 
         // GET: api/Event
         public IEnumerable<Event> Get()
@@ -24,21 +24,21 @@ namespace CalgaryHacks.Controllers
         // POST: api/Event
         public void Post([FromBody]Event eventObject)
         {
-            db.Events.Add(eventObject);
-            db.SaveChanges();
-            EventCache.UpdateEventsFromDb();
+//            db.Events.Add(eventObject);
+//            db.SaveChanges();
+//            EventCache.UpdateEventsFromDb();
         }
 
         // DELETE: api/Event/5
         public void Delete(int id)
         {
-            Event eventObject = db.Events.Find(id);
-            if (eventObject != null)
-            {
-                db.Events.Remove(eventObject);
-                db.SaveChanges();
-            }
-            EventCache.UpdateEventsFromDb();
+//            Event eventObject = db.Events.Find(id);
+//            if (eventObject != null)
+//            {
+//                db.Events.Remove(eventObject);
+//                db.SaveChanges();
+//            }
+//            EventCache.UpdateEventsFromDb();
         }
     }
 }
