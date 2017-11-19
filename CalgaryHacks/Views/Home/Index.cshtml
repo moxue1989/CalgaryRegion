@@ -83,7 +83,7 @@
             <h5><span class="glyphicon glyphicon-time"></span> @String.Format("{0:f}", eventModel.EventDate) , @eventModel.Address</h5>
             <h5><span class="label label-danger">Sporting</span> <span class="label label-primary">Entertainment</span></h5>
             <br>
-            <p> Description:@Html.Raw(eventDescription)</p>
+            <p> Description: @Html.Raw(eventDescription)</p>
             <p>More Information: <a href="@eventModel.URL"> Buy tickets Now!</a></p>
 
             <form action="/Home/ChooseChat" method="post">
@@ -255,7 +255,7 @@
                         address.appendTo(".address");
 
                         $(".url").empty();
-                        var url = $("<p>").html("<a href='@eventModel.URL'>Click here for more Information");
+                        var url = $("<p>").html("<a href='@eventModel.URL'>Click here for more information");
                         url.appendTo(".url");
 
                         $(".eventDate").empty();
