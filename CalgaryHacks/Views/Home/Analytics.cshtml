@@ -6,6 +6,7 @@
     ViewBag.Title = "Analytics";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
+    var otherIndicatorsOfLife = ViewBag.OtherIndicatorsOfLife as List<OtherIndicatorsOfLife>;
 
 }
 
@@ -23,8 +24,107 @@
 <body>
 <h3>Calgary Analytics Map</h3>
     
-<p>@ViewBag.IsCoordinatesinNW</p>
 <div id="map"></div>
+    
+<!--Test of div rows-->
+<div class="container">
+
+    <div class="row">
+        <div class="card" style="width: 300px; height: 250px;">
+            <canvas id="communityBelonging" ></canvas>
+            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+        </div>
+        <div class="card" style="width: 300px; height: 250px;">
+            <canvas id="dailyNeedsBarChart" ></canvas>
+            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+        </div>
+    </div>
+</div>
+    <!--End of the test-->
+    
+@*<div style="width: 300px; height: 250px;">*@
+@*    <canvas id="dailyNeedsBarChart" ></canvas>*@
+@*</div>*@
+    
+    <!-- Dependencies for Chart.js-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+<script type="text/javascript" src="jscript/graph.js"></script>
+    
+    <!-- Script for creating the Community Belonging Chart-->
+<script>
+    var CommunityBelonging = document.getElementById("communityBelonging").getContext("2d");
+    var MeSeData = {
+        labels: [
+            "2017",
+            "2016"
+        ],
+        datasets: [
+            {
+                label: "Community Belonging",
+                data: [68, 67],
+                backgroundColor: ["#FCCE56", "#FCCE56" ],
+                hoverBackgroundColor: ["#66A2EB", "#FCCE56"]
+            }]
+    };
+
+    var MeSeChart = new Chart(CommunityBelonging, {
+        type: 'horizontalBar',
+        data: MeSeData,
+        options: {
+            scales: {
+                xAxes: [{
+                    ticks: {
+                        min: 60 // Edit the value according to what you need
+                    }
+                }],
+                yAxes: [{
+                    stacked: true
+                }]
+            }
+
+        }
+    });
+
+</script>
+    
+    
+<script>
+    var DailyNeedsAndServices = document.getElementById("dailyNeedsBarChart").getContext("2d");
+    var MeSeData = {
+        labels: [
+            "2017",
+            "2016"
+        ],
+        datasets: [
+            {
+                label: "Daily Needs And Services",
+                data: [22, 19],
+                backgroundColor: ["#66A2EB", "#66A2EB" ],
+                hoverBackgroundColor: ["#FCCE56", "#FCCE56"]
+            }]
+    };
+
+    var MeSeChart = new Chart(DailyNeedsAndServices, {
+        type: 'horizontalBar',
+        data: MeSeData,
+        options: {
+            scales: {
+                xAxes: [{
+                    ticks: {
+                        min: 0 // Edit the value according to what you need
+                    }
+                }],
+                yAxes: [{
+                    stacked: true
+                }]
+            }
+
+        }
+    });
+
+</script>
+    
+
 <script>
     var map;
     var infoWindowCalgaryNE;
@@ -32,30 +132,30 @@
     var iconSize;
     var icons;
     function initMap() {
-            iconSize = new google.maps.Size(dim,dim);
-            icons = {
-                CTrain:{
-                    url: '../images/LRTStation.png',
-                    scaledSize: iconSize
-                },
-                Library:{
-                    url: '../images/PublicLibrary.png',
-                    scaledSize: iconSize
-                },
-                CommunityCenter:{
-                    url: '../images/CommunityCentre.png',
-                    scaledSize: iconSize
-                },
-                PoliceStation:{
-                    url: '../images/PoliceStation.png',
-                    scaledSize: iconSize
-                },
-                FireStation:{
-                    url: '../images/FireStation.png',
-                    scaledSize: iconSize
-                }
-            };
-            var calgaryMap = { lat: 51.0486, lng: -114.0708 };
+        iconSize = new google.maps.Size(dim,dim);
+        icons = {
+            CTrain:{
+                url: '../images/LRTStation.png',
+                scaledSize: iconSize
+            },
+            Library:{
+                url: '../images/PublicLibrary.png',
+                scaledSize: iconSize
+            },
+            CommunityCenter:{
+                url: '../images/CommunityCentre.png',
+                scaledSize: iconSize
+            },
+            PoliceStation:{
+                url: '../images/PoliceStation.png',
+                scaledSize: iconSize
+            },
+            FireStation:{
+                url: '../images/FireStation.png',
+                scaledSize: iconSize
+            }
+        };
+        var calgaryMap = { lat: 51.0486, lng: -114.0708 };
         map = new google.maps.Map(document.getElementById('map'),
             {
                 zoom: 10,
@@ -65,18 +165,18 @@
         var infowindow = new google.maps.InfoWindow();
 
         
-            @foreach (var pointOfInterest in Model.Where(x => x.Type == "Police Station" || x.Type == "Fire Station" || x.Type == "Library" ))
+        @foreach (var pointOfInterest in Model.Where(x => x.Type == "Police Station" || x.Type == "Fire Station" || x.Type == "Library" ))
             {
              <text>
                  var myLatLng = { lat: @pointOfInterest.Latitude, lng: @pointOfInterest.Longitude };
                  var contentPOI = '@pointOfInterest.Name' + ' @pointOfInterest.Type';
 
            
-            var marker = new google.maps.Marker(
-                {
-                position: myLatLng,
-                map: map,
-                icon: icons.@Html.Raw(@pointOfInterest.Type.Replace(" ",""))
+                 var marker = new google.maps.Marker(
+                     {
+                         position: myLatLng,
+                         map: map,
+                         icon: icons.@Html.Raw(@pointOfInterest.Type.Replace(" ",""))
                      });
 
                  google.maps.event.addListener(marker,
