@@ -4,9 +4,11 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
+using System.Web.WebSockets;
 using CalgaryHacks.Apis;
 using CalgaryHacks.DatabaseModel;
 using CalgaryHacks.Models;
+using Microsoft.Ajax.Utilities;
 
 namespace CalgaryHacks.Controllers
 {
@@ -174,6 +176,41 @@ namespace CalgaryHacks.Controllers
             var pointsOfInterests = db.PointsOfInterest.ToList();
 
             return View(pointsOfInterests);
+        }
+
+        public ActionResult Quadrants(string quadrant)
+        {
+            ViewModels.QuadrantModel quadrantModel = new ViewModels.QuadrantModel();
+
+            quadrantModel.Events = EventCache.GetEventBag().Where(x => x.Quadrant == quadrant).ToList();
+            quadrantModel.PointsOfInterests = db.PointsOfInterest.Where(x => x.Location == quadrant).ToList();
+
+          
+            switch (quadrant)
+            {
+                case "NW":
+                    quadrantModel.Lat = "51.0750527";
+                    quadrantModel.Lng = "-114.1194289";
+                    break;
+                case "NE":
+
+                    quadrantModel.Lat = "51.0865101";
+                    quadrantModel.Lng = "-113.967823";
+                    break;
+                case "SW":
+                    quadrantModel.Lat = "51.0213185";
+                    quadrantModel.Lng = "-114.1023589";
+
+                    break;
+                case "SE":
+                    quadrantModel.Lat = "51.011528";
+                    quadrantModel.Lng = "-113.9891212";
+                    break;
+                default:
+                    break;
+
+            }
+            return View(quadrantModel);
         }
     }
 }

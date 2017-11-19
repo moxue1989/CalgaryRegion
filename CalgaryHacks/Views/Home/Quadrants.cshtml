@@ -1,0 +1,134 @@
+﻿@model  CalgaryHacks.Models.ViewModels.QuadrantModel
+
+@{
+    ViewBag.Title = "title";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        #map {
+            height: 400px;
+            width: 100%;
+        }
+
+        ul.breadcrumb {
+            padding: 10px 16px;
+            list-style: none;
+            background-color: #eee;
+        }
+
+            ul.breadcrumb li {
+                display: inline;
+                font-size: 18px;
+            }
+
+                ul.breadcrumb li + li:before {
+                    padding: 8px;
+                    color: black;
+                    content: "/\00a0";
+                }
+
+                ul.breadcrumb li a {
+                    color: #0275d8;
+                    text-decoration: none;
+                }
+
+                    ul.breadcrumb li a:hover {
+                        color: #01447e;
+                        text-decoration: underline;
+                    }
+    </style>
+</head>
+<body>
+    <h3>Quadrants</h3>
+
+<ul class="breadcrumb">
+    
+
+    <li><a href="@Url.Action("Analytics", "Home")">Calgary</a></li>
+    <li><a href="@Url.Action("Quadrants", "Home", new {quadrant = "NE"})">NE</a></li>
+    <li><a href="@Url.Action("Quadrants", "Home", new {quadrant = "NW"})">NW</a></li>
+    <li><a href="@Url.Action("Quadrants", "Home", new {quadrant = "SW"})">SW</a></li>
+    <li><a href="@Url.Action("Quadrants", "Home", new {quadrant = "SE"})">SE</a></li>
+
+</ul>
+
+    <div id="map"></div>
+
+<script>
+    var map;
+    var dim = 25;
+    var iconSize;
+    var icons;
+
+    function initMap() {
+        iconSize = new google.maps.Size(dim, dim);
+        icons = {
+            CTrain: {
+                url: '../images/LRTStation.png',
+                scaledSize: iconSize
+            },
+            Library: {
+                url: '../images/PublicLibrary.png',
+                scaledSize: iconSize
+            },
+            CommunityCenter: {
+                url: '../images/CommunityCentre.png',
+                scaledSize: iconSize
+            },
+            PoliceStation: {
+                url: '../images/PoliceStation.png',
+                scaledSize: iconSize
+            },
+            FireStation: {
+                url: '../images/FireStation.png',
+                scaledSize: iconSize
+            }
+        };
+        //need to change this
+
+        var calgaryMap = { lat: @Model.Lat, lng: @Model.Lng };
+        map = new google.maps.Map(document.getElementById('map'),
+            {
+                zoom: 12,
+                center: calgaryMap
+            });
+
+        var infowindow = new google.maps.InfoWindow();
+
+
+        @foreach (var pointOfInterest in Model.PointsOfInterests.Where(x => x.Type == "Police Station" || x.Type == "Fire Station" || x.Type == "Library"))
+        {
+            <text>
+                var myLatLng = { lat: @pointOfInterest.Latitude, lng: @pointOfInterest.Longitude };
+                var contentPOI = '@pointOfInterest.Name' + ' @pointOfInterest.Type';
+
+
+                var marker = new google.maps.Marker(
+                    {
+                        position: myLatLng,
+                        map: map,
+                        icon: icons.@Html.Raw(@pointOfInterest.Type.Replace(" ", ""))
+                    });
+
+                google.maps.event.addListener(marker,
+                    'click',
+                    (function(marker, contentPOI) {
+                        return function() {
+                            infowindow.setContent(contentPOI);
+                            infowindow.open(map, marker);
+                        }
+                    })(marker, contentPOI));
+
+            </text>
+
+        }
+    }
+</script>
+    
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCi84qEblX_oHY4fLUW8pjliIsrXZJs3eI&callback=initMap">
+</script>
