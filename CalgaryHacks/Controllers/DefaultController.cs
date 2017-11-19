@@ -16,8 +16,8 @@ namespace CalgaryHacks.Controllers
         public string Get(int id)
         {
 //            EmailSender.SendEmail("mo_xue1989@yahoo.ca", "test email", "this is a test");
-            EventsApi.UpdateEvents();
-            PointsOfInterestsMapper.UpdateTransitLRTStations(PointsOfInterestsApi.GetTransitLRTLocations());
+//            EventsApi.UpdateEvents();
+//            PointsOfInterestsMapper.UpdateTransitLRTStations(PointsOfInterestsApi.GetTransitLRTLocations());
             return "value";
         }
 

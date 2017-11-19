@@ -200,6 +200,7 @@
     <Compile Include="DatabaseModel\Location.cs" />
     <Compile Include="DatabaseModel\OtherIndicatorsOfLife.cs" />
     <Compile Include="DatabaseModel\PointsOfInterest.cs" />
+    <Compile Include="DatabaseModel\PointsOfInterestCache.cs" />
     <Compile Include="DatabaseModel\User.cs" />
     <Compile Include="EventDtos\EventfulDTO.cs" />
     <Compile Include="EventDtos\GoogleLocations.cs" />
@@ -301,7 +302,6 @@
     <Content Include="Views\Home\Register.cshtml" />
     <Content Include="Views\Home\ChooseChat.cshtml" />
     <Content Include="Views\Home\Analytics.cshtml" />
-    <Content Include="Views\Home\CalgaryNorthWest.cshtml" />
     <Content Include="Views\Home\Quadrants.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
   </ItemGroup>

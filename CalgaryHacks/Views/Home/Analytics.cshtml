@@ -1,57 +1,45 @@
-﻿@using CalgaryHacks.DatabaseModel
-@using CalgaryHacks.EventDtos
-@model List<CalgaryHacks.DatabaseModel.PointsOfInterest>
+﻿@model List<CalgaryHacks.DatabaseModel.PointsOfInterest>
 
 @{
     ViewBag.Title = "Analytics";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-
-    var otherIndicatorsOfLife = ViewBag.OtherIndicatorsOfLife as List<OtherIndicatorsOfLife>;
-
 }
 
+<style>
+    #map {
+        height: 400px;
+        width: 100%;
+    }
 
-<!DOCTYPE html>
-<html>
-<head>
-    <!-- Dependencies for Chart.js-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
-    <script type="text/javascript" src="jscript/graph.js"></script>
+    ul.breadcrumb {
+        padding: 10px 16px;
+        list-style: none;
+        background-color: #eee;
+    }
 
-
-    <style>
-        #map {
-            height: 400px;
-            width: 100%;
-        }
-
-        ul.breadcrumb {
-            padding: 10px 16px;
-            list-style: none;
-            background-color: #eee;
-        }
         ul.breadcrumb li {
             display: inline;
             font-size: 18px;
         }
-        ul.breadcrumb li+li:before {
-            padding: 8px;
-            color: black;
-            content: "/\00a0";
-        }
-        ul.breadcrumb li a {
-            color: #0275d8;
-            text-decoration: none;
-        }
-        ul.breadcrumb li a:hover {
-            color: #01447e;
-            text-decoration: underline;
-        }
-    </style>
-</head>
-<body>
+
+            ul.breadcrumb li + li:before {
+                padding: 8px;
+                color: black;
+                content: "/\00a0";
+            }
+
+            ul.breadcrumb li a {
+                color: #0275d8;
+                text-decoration: none;
+            }
+
+                ul.breadcrumb li a:hover {
+                    color: #01447e;
+                    text-decoration: underline;
+                }
+</style>
+
 <h3>Calgary Analytics Map</h3>
-    
+
 
 <ul class="breadcrumb">
     <li>Calgary</li>
@@ -63,40 +51,84 @@
 </ul>
 
 <div id="map"></div>
-    
+
 <!--Test of div rows-->
-<div class="container">
-
+<!----Write variables that may affect these things-->
+<div class="container" style="padding-top:2em">
     <div class="row">
-        <div class="card" style="width: 300px; height: 250px;">
-            <canvas id="communityBelonging" ></canvas>
-            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+        <div class="col-sm-6 col-md-6 col-lg-6">
+            <div class="panel panel-info">
+                <div class="panel-heading"><strong>Community Belonging</strong></div>
+                <div class="panel-body">
+                    <p>Community belonging measures an individual’s perception of their overall sense of belonging to their local community. Events hosted by the community
+                    , availability to public servants (ie police, firefighters), etc.</p>
+                    <canvas id="communityBelonging"></canvas>
+                </div>
+            </div>
         </div>
-        <div class="card" style="width: 300px; height: 250px;">
-            <canvas id="dailyNeedsBarChart" ></canvas>
-            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+        <div class="col-sm-6 col-md-6 col-lg-6">
+            <div class="panel panel-info">
+                <div class="panel-heading"><strong>Daily Needs</strong></div>
+                <div class="panel-body">
+                    <p>Daily needs measures an individual's accessibility to resources such as groceries, shopping malls, etc. Factors which may affect this include
+                    distance to stores, access to transit, etc.</p>
+                    <canvas id="dailyNeedsBarChart"></canvas>
+                </div>
+            </div>
         </div>
     </div>
-    
-    <div class="card" style="width: 300px; height: 250px;">
-        <canvas id="activeAdults" ></canvas>
+    <div class="row">
+        <div class="col-sm-6 col-md-6 col-lg-6">
+            <div class="panel panel-info">
+                <div class="panel-heading"><strong>Active Adults</strong></div>
+                <div class="panel-body">
+                    <p>Active adults measures the amount of adults who are active. Distances to city parks, recreational centers, etc. can affect an individual's
+                    motivation to pursue a healthier lifestyle.</p>
+                    <canvas id="activeAdults"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-6 col-lg-6">
+            <div class="panel panel-info">
+                <div class="panel-heading"><strong>Accessibility to Transit</strong></div>
+                <div class="panel-body">
+                    <p>Accessibility to transit measures an individual's ability to access transit. Not all individuals have access to vehicles and many individuals
+                    downtown rely on the C-Train and city busses.</p>
+                    <canvas id="accessibilityTransit"></canvas>
+                </div>
+            </div>
+        </div>
     </div>
-    
-    
-    <div class="card" style="width: 300px; height: 250px;">
-        <canvas id="accessibilityTransit" ></canvas>
-    </div>
-   
-
 </div>
-    <!--End of the test-->
-    
+
+@*<div class="card" style="width: 300px; height: 250px;">
+            <canvas id="communityBelonging"></canvas>
+            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+        </div>
+        <div class="card" style="width: 300px; height: 250px;">
+            <canvas id="dailyNeedsBarChart"></canvas>
+            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+        </div>
+    </div>
+    <div class="col-sm-6 col-md-6 col-lg-6">
+        <div class="card" style="width: 300px; height: 250px;">
+            <canvas id="activeAdults"></canvas>
+        </div>
+
+
+        <div class="card" style="width: 300px; height: 250px;">
+            <canvas id="accessibilityTransit"></canvas>
+        </div>
+
+    </div>*@
+
+
+
+
+<!--End of the test-->
 @*<div style="width: 300px; height: 250px;">*@
 @*    <canvas id="dailyNeedsBarChart" ></canvas>*@
 @*</div>*@
-    
-
-    
 
 <script>
  var map;
@@ -1607,11 +1639,14 @@ function initMap() {
 
 
 }//End of the initmap function
-</script> 
+</script>
 
+<!-- Dependencies for Chart.js-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+<script type="text/javascript" src="jscript/graph.js"></script>
 @Scripts.Render("../Scripts/AnalyticsMainPageCharts.js")
+
+
 <script async defer
-            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCi84qEblX_oHY4fLUW8pjliIsrXZJs3eI&callback=initMap">
-    </script>
-</body>
-</html>
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCi84qEblX_oHY4fLUW8pjliIsrXZJs3eI&callback=initMap">
+</script>

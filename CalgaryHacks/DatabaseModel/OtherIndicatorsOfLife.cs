@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace CalgaryHacks.DatabaseModel
+﻿namespace CalgaryHacks.DatabaseModel
 {
     public class OtherIndicatorsOfLife
     {

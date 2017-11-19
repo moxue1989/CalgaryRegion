@@ -9,8 +9,8 @@ var MeSeData = {
         {
             label: "Community Belonging",
             data: [68, 67],
-            backgroundColor: ["#FCCE56", "#FCCE56" ],
-            hoverBackgroundColor: ["#66A2EB", "#FCCE56"]
+            backgroundColor: ["#66A2EB", "#66A2EB" ],
+            hoverBackgroundColor: ["#FCCE56", "#FCCE56"]
         }]
 };
 
@@ -27,6 +27,12 @@ var MeSeChart = new Chart(CommunityBelonging, {
             yAxes: [{
                 stacked: true
             }]
+        }, title: {
+            display: true,
+            text: 'Community Belonging (%)'
+        },
+        legend: {
+            display: false,
         }
 
     }
@@ -41,9 +47,9 @@ var MeSeData = {
     ],
     datasets: [
         {
-            label: "Daily Needs And Services",
+            //label: "Daily Needs And Services",
             data: [22, 19],
-            backgroundColor: ["#66A2EB", "#66A2EB" ],
+            backgroundColor: ["#00FF00", "#00FF00" ],
             hoverBackgroundColor: ["#FCCE56", "#FCCE56"]
         }]
 };
@@ -61,8 +67,14 @@ var MeSeChart = new Chart(DailyNeedsAndServices, {
             yAxes: [{
                 stacked: true
             }]
+        },
+        title: {
+            display: true,
+            text: 'Daily Needs (%)'
+        },
+        legend: {
+            display: false,
         }
-
     }
 });
 
@@ -76,9 +88,9 @@ var MeSeData = {
     ],
     datasets: [
         {
-            label: "Active Adults",
+            //label: "Active Adults",
             data: [57, 63],
-            backgroundColor: ["#66A2EB", "#66A2EB"],
+            backgroundColor: ["#FF0000", "#FF0000"],
             hoverBackgroundColor: ["#FCCE56", "#FCCE56"]
         }]
 };
@@ -100,9 +112,11 @@ var activeAdultsChart = new Chart(activeAdults, {
         },
         title: {
             display: true,
-            text: 'Active Adults'
+            text: 'Active Adults (%)'
+        },
+        legend: {
+            display: false,
         }
-
     }
 });
 
@@ -118,7 +132,7 @@ var MeSeData = {
         {
             label: "Accessibility To Transit",
             data: [14.5, 14.7],
-            backgroundColor: ["#66A2EB", "#66A2EB"],
+            backgroundColor: ["#778899", "#778899"],
             hoverBackgroundColor: ["#FCCE56", "#FCCE56"]
         }]
 };
@@ -137,7 +151,13 @@ var activeAdultsChart = new Chart(accessibilityTransit, {
             yAxes: [{
                 stacked: true
             }]
+        }, title: {
+            display: true,
+            text: 'Accessibility To Transit (%)'
+        }, legend: {
+            display: false,
         }
+
 
     }
 });
