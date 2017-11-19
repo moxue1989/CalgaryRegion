@@ -20,6 +20,17 @@ namespace CalgaryHacks.Models
             public List<Event> Events { get; set; }
         }
 
+        public class QuadrantModel
+        {
+            public List<PointsOfInterest> PointsOfInterests { get; set; }
+
+            public List<Event> Events { get; set; }
+
+            public string Lat { get; set; }
+
+            public string Lng { get; set; }
+        }
+
         public class LoginModel
         {
             [Required(ErrorMessage = "Email is required.")]
